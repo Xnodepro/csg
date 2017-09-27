@@ -40,12 +40,14 @@ namespace CSMONEY
                     }
                     if (Convert.ToInt32(DateTime.Now.ToString("HHmmss")) - firstFull > 200)
                     {
+                        bool cheek = false;
                         var dt = DataTa.GetTable();
                         foreach (DataRow item in dt.Rows)
                         {
                             var s = item.ItemArray;
                             if (s[0].ToString() == Properties.Settings.Default.name && s[1].ToString() == Properties.Settings.Default.csmoney)
                             {
+                                cheek = true;
                                 if (s[3].ToString() != Properties.Settings.Default.csmoneyVersion)
                                 {
                                     MessageBox.Show("Версия ПО устарела");
@@ -53,10 +55,12 @@ namespace CSMONEY
                                 }
                                 Program.sleepIMONEY = Convert.ToInt32(s[2].ToString());
                             }
-                            //else {
-                            //    MessageBox.Show("Лицензия не активная.");
-                            //    Application.Exit();
-                            //}
+                           
+                        }
+                        if (cheek == false)
+                        {
+                            MessageBox.Show("Лицензия не активная.");
+                            Application.Exit();
                         }
                         firstFull = Convert.ToInt32(DateTime.Now.ToString("HHmmss"));
                         RefreshBotInventory();
@@ -160,7 +164,7 @@ namespace CSMONEY
                         }
                 }
             }
-            catch (Exception ex) { Program.Mess.Enqueue("БОТ[" + ID + "] " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "|" + ex.Message); }
+            catch (Exception ex) { Program.Mess.Enqueue("БОТ[" + ID + "] Вывод с модуля клика:" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "|" + ex.Message); }
             return false;
         }
         private bool ChekItemsOffer(string name)

@@ -46,7 +46,7 @@ namespace CSMONEY
             var item = new Program.Dat {
                 Id = unixTimestamp,
                 Name = textBox2.Text,
-                Factory = comboBox1.Text,
+             //   Factory = comboBox1.Text,
                 Price = Convert.ToDouble(textBox3.Text.Replace(".",","))};
                 Program.Data.Add(item);
             RefreshGrid();
@@ -60,9 +60,9 @@ namespace CSMONEY
             {      
                 int rowId = dataGridView1.Rows.Add();
                 DataGridViewRow row = dataGridView1.Rows[rowId];
-                row.Cells["Id"].Value = item.Id;
+                row.Cells["id2"].Value = item.Id;
                 row.Cells["Name"].Value = item.Name;
-                row.Cells["Factor"].Value = item.Factory;
+               // row.Cells["Factor"].Value = item.Factory;
                 row.Cells["Price"].Value = item.Price;
             }
            
@@ -78,7 +78,7 @@ namespace CSMONEY
                     DataGridViewRow row = dataGridView2.Rows[rowId];
                     row.Cells["id1"].Value = item.Id;
                     row.Cells["name1"].Value = item.Name;
-                    row.Cells["factor1"].Value = item.Factory;
+                  //  row.Cells["factor1"].Value = item.Factory;
                     row.Cells["price1"].Value = item.Price;
                 }
             }
@@ -96,7 +96,7 @@ namespace CSMONEY
                     DataGridViewRow row = dataGridView3.Rows[rowId];
                     row.Cells["id3"].Value = item.Id;
                     row.Cells["name3"].Value = item.Name;
-                    row.Cells["factory3"].Value = item.Factory;
+                  //  row.Cells["factory3"].Value = item.Factory;
                     row.Cells["price3"].Value = item.Price;
                 }
             }

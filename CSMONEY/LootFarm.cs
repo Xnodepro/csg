@@ -39,12 +39,14 @@ namespace CSMONEY
                     }
                     if (Convert.ToInt32(DateTime.Now.ToString("HHmmss")) - firstFull > 200)
                     {
+                        bool cheek = false;
                         var dt = DataTa.GetTable();
                         foreach (DataRow item in dt.Rows)
                         {
                             var s = item.ItemArray;
                             if (s[0].ToString() == Properties.Settings.Default.name && s[1].ToString() == Properties.Settings.Default.lootfarm)
                             {
+                                cheek = true;
                                 if (s[3].ToString() != Properties.Settings.Default.lootfarmVersion)
                                 {
                                     MessageBox.Show("Версия ПО устарела");
@@ -52,11 +54,12 @@ namespace CSMONEY
                                 }
                                 Program.sleepILoot = Convert.ToInt32(s[2].ToString());
                             }
-                            //else
-                            //{
-                            //    MessageBox.Show("Лицензия не активная.");
-                            //    Application.Exit();
-                            //}
+                           
+                        }
+                        if (cheek == false)
+                        {
+                            MessageBox.Show("Лицензия не активная.");
+                            Application.Exit();
                         }
                         firstFull = Convert.ToInt32(DateTime.Now.ToString("HHmmss"));
                         RefreshBotInventory();

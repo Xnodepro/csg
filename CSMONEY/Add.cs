@@ -29,7 +29,7 @@ namespace CSMONEY
             {
                 Id = unixTimestamp,
                 Name = textBox2.Text,
-                Factory = comboBox1.Text,
+               // Factory = comboBox1.Text,
                 Price = Convert.ToDouble(textBox3.Text.Replace(".", ","))
             };
             Program.Data.Add(item);
@@ -46,7 +46,7 @@ namespace CSMONEY
                 DataGridViewRow row = DGV.Rows[rowId];
                 row.Cells["Id"].Value = item.Id;
                 row.Cells["Name"].Value = item.Name;
-                row.Cells["Factor"].Value = item.Factory;
+              //  row.Cells["Factor"].Value = item.Factory;
                 row.Cells["Price"].Value = item.Price;
             }
 
@@ -65,6 +65,15 @@ namespace CSMONEY
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+           textBox2.Text = Clipboard.GetText();
         }
     }
 }

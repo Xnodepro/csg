@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="name" Type="System.String" Scope="User">
-      <Value Profile="(Default)">СашаТрофимов</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="csmoney" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
