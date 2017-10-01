@@ -24,6 +24,9 @@ namespace CSMONEY
         public static Queue<string> Mess = new Queue<string>();
         public static Queue<string> MessLoot = new Queue<string>();
         public static Queue<string> MessCsTrade = new Queue<string>();
+        public static bool pauseMoney = false;
+        public static bool pauseLoot = false;
+        public static bool pauseCsTrade = false;
         public static int sleepMSecond = 500;
         public static int sleepMSecondLoot = 500;
         public static int sleepMCsTrade = 500;

@@ -35,6 +35,10 @@
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.id2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Factor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Price = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.удалитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
@@ -46,8 +50,10 @@
             this.button4 = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.button11 = new System.Windows.Forms.Button();
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.button12 = new System.Windows.Forms.Button();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
@@ -57,8 +63,15 @@
             this.textBox8 = new System.Windows.Forms.TextBox();
             this.button7 = new System.Windows.Forms.Button();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.id1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.name1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.factor1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.price1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.button13 = new System.Windows.Forms.Button();
             this.textBox9 = new System.Windows.Forms.TextBox();
             this.button8 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
@@ -68,25 +81,19 @@
             this.textBox12 = new System.Windows.Forms.TextBox();
             this.button10 = new System.Windows.Forms.Button();
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
-            this.id2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Factor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Price = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.id1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.name1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.factor1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.price1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.id3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.name3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.factory3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.price3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.listBox2 = new System.Windows.Forms.ListBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            this.contextMenuStrip2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
             this.SuspendLayout();
@@ -97,7 +104,7 @@
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Location = new System.Drawing.Point(638, 339);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(202, 33);
+            this.button1.Size = new System.Drawing.Size(139, 33);
             this.button1.TabIndex = 0;
             this.button1.Text = "Старт";
             this.button1.UseVisualStyleBackColor = true;
@@ -159,6 +166,29 @@
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.Size = new System.Drawing.Size(315, 301);
             this.dataGridView1.TabIndex = 5;
+            // 
+            // id2
+            // 
+            this.id2.HeaderText = "id";
+            this.id2.Name = "id2";
+            this.id2.Visible = false;
+            // 
+            // Name
+            // 
+            this.Name.HeaderText = "Название";
+            this.Name.Name = "Name";
+            this.Name.Width = 200;
+            // 
+            // Factor
+            // 
+            this.Factor.HeaderText = "Качество";
+            this.Factor.Name = "Factor";
+            this.Factor.Visible = false;
+            // 
+            // Price
+            // 
+            this.Price.HeaderText = "Цена";
+            this.Price.Name = "Price";
             // 
             // contextMenuStrip1
             // 
@@ -256,6 +286,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.button11);
             this.tabPage1.Controls.Add(this.listBox1);
             this.tabPage1.Controls.Add(this.textBox1);
             this.tabPage1.Controls.Add(this.button4);
@@ -275,6 +306,18 @@
             this.tabPage1.Text = "CSMONEY";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // button11
+            // 
+            this.button11.Enabled = false;
+            this.button11.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button11.Location = new System.Drawing.Point(783, 339);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(58, 32);
+            this.button11.TabIndex = 12;
+            this.button11.Text = "Pause";
+            this.button11.UseVisualStyleBackColor = true;
+            this.button11.Click += new System.EventHandler(this.button11_Click);
+            // 
             // listBox1
             // 
             this.listBox1.FormattingEnabled = true;
@@ -286,6 +329,8 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.listBox2);
+            this.tabPage2.Controls.Add(this.button12);
             this.tabPage2.Controls.Add(this.textBox5);
             this.tabPage2.Controls.Add(this.button5);
             this.tabPage2.Controls.Add(this.button6);
@@ -303,6 +348,18 @@
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "LOOT.FARM";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // button12
+            // 
+            this.button12.Enabled = false;
+            this.button12.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button12.Location = new System.Drawing.Point(783, 339);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(58, 32);
+            this.button12.TabIndex = 21;
+            this.button12.Text = "Pause";
+            this.button12.UseVisualStyleBackColor = true;
+            this.button12.Click += new System.EventHandler(this.button12_Click);
             // 
             // textBox5
             // 
@@ -331,7 +388,7 @@
             this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button6.Location = new System.Drawing.Point(638, 339);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(202, 33);
+            this.button6.Size = new System.Drawing.Size(139, 33);
             this.button6.TabIndex = 11;
             this.button6.Text = "Старт";
             this.button6.UseVisualStyleBackColor = true;
@@ -394,12 +451,50 @@
             this.name1,
             this.factor1,
             this.price1});
+            this.dataGridView2.ContextMenuStrip = this.contextMenuStrip2;
             this.dataGridView2.GridColor = System.Drawing.SystemColors.Control;
             this.dataGridView2.Location = new System.Drawing.Point(638, 32);
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.RowHeadersVisible = false;
             this.dataGridView2.Size = new System.Drawing.Size(315, 301);
             this.dataGridView2.TabIndex = 15;
+            // 
+            // id1
+            // 
+            this.id1.HeaderText = "id";
+            this.id1.Name = "id1";
+            this.id1.Visible = false;
+            // 
+            // name1
+            // 
+            this.name1.HeaderText = "Название";
+            this.name1.Name = "name1";
+            this.name1.Width = 200;
+            // 
+            // factor1
+            // 
+            this.factor1.HeaderText = "Качество";
+            this.factor1.Name = "factor1";
+            this.factor1.Visible = false;
+            // 
+            // price1
+            // 
+            this.price1.HeaderText = "Цена";
+            this.price1.Name = "price1";
+            // 
+            // contextMenuStrip2
+            // 
+            this.contextMenuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem1});
+            this.contextMenuStrip2.Name = "contextMenuStrip1";
+            this.contextMenuStrip2.Size = new System.Drawing.Size(119, 26);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(118, 22);
+            this.toolStripMenuItem1.Text = "Удалить";
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
             // comboBox2
             // 
@@ -419,6 +514,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.button13);
             this.tabPage3.Controls.Add(this.textBox9);
             this.tabPage3.Controls.Add(this.button8);
             this.tabPage3.Controls.Add(this.button9);
@@ -435,6 +531,17 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "CSTRADE.GG";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // button13
+            // 
+            this.button13.Enabled = false;
+            this.button13.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button13.Location = new System.Drawing.Point(787, 342);
+            this.button13.Name = "button13";
+            this.button13.Size = new System.Drawing.Size(58, 32);
+            this.button13.TabIndex = 31;
+            this.button13.Text = "Pause";
+            this.button13.UseVisualStyleBackColor = true;
             // 
             // textBox9
             // 
@@ -461,7 +568,7 @@
             this.button9.Enabled = false;
             this.button9.Location = new System.Drawing.Point(642, 341);
             this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(202, 33);
+            this.button9.Size = new System.Drawing.Size(139, 33);
             this.button9.TabIndex = 21;
             this.button9.Text = "Старт";
             this.button9.UseVisualStyleBackColor = true;
@@ -536,69 +643,6 @@
             this.dataGridView3.Size = new System.Drawing.Size(315, 301);
             this.dataGridView3.TabIndex = 25;
             // 
-            // comboBox3
-            // 
-            this.comboBox3.Enabled = false;
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Items.AddRange(new object[] {
-            "Factory New",
-            "Minimal Wear",
-            "Field-Tested",
-            "Battle-Scarred",
-            "Well-Worn"});
-            this.comboBox3.Location = new System.Drawing.Point(207, 10);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(121, 21);
-            this.comboBox3.TabIndex = 26;
-            this.comboBox3.Text = "Factory New";
-            this.comboBox3.Visible = false;
-            // 
-            // id2
-            // 
-            this.id2.HeaderText = "id";
-            this.id2.Name = "id2";
-            this.id2.Visible = false;
-            // 
-            // Name
-            // 
-            this.Name.HeaderText = "Название";
-            this.Name.Name = "Name";
-            this.Name.Width = 200;
-            // 
-            // Factor
-            // 
-            this.Factor.HeaderText = "Качество";
-            this.Factor.Name = "Factor";
-            this.Factor.Visible = false;
-            // 
-            // Price
-            // 
-            this.Price.HeaderText = "Цена";
-            this.Price.Name = "Price";
-            // 
-            // id1
-            // 
-            this.id1.HeaderText = "id";
-            this.id1.Name = "id1";
-            this.id1.Visible = false;
-            // 
-            // name1
-            // 
-            this.name1.HeaderText = "Название";
-            this.name1.Name = "name1";
-            this.name1.Width = 200;
-            // 
-            // factor1
-            // 
-            this.factor1.HeaderText = "Качество";
-            this.factor1.Name = "factor1";
-            this.factor1.Visible = false;
-            // 
-            // price1
-            // 
-            this.price1.HeaderText = "Цена";
-            this.price1.Name = "price1";
-            // 
             // id3
             // 
             this.id3.HeaderText = "id";
@@ -622,6 +666,32 @@
             this.price3.HeaderText = "Цена";
             this.price3.Name = "price3";
             // 
+            // comboBox3
+            // 
+            this.comboBox3.Enabled = false;
+            this.comboBox3.FormattingEnabled = true;
+            this.comboBox3.Items.AddRange(new object[] {
+            "Factory New",
+            "Minimal Wear",
+            "Field-Tested",
+            "Battle-Scarred",
+            "Well-Worn"});
+            this.comboBox3.Location = new System.Drawing.Point(207, 10);
+            this.comboBox3.Name = "comboBox3";
+            this.comboBox3.Size = new System.Drawing.Size(121, 21);
+            this.comboBox3.TabIndex = 26;
+            this.comboBox3.Text = "Factory New";
+            this.comboBox3.Visible = false;
+            // 
+            // listBox2
+            // 
+            this.listBox2.FormattingEnabled = true;
+            this.listBox2.Location = new System.Drawing.Point(5, 31);
+            this.listBox2.Name = "listBox2";
+            this.listBox2.ScrollAlwaysVisible = true;
+            this.listBox2.Size = new System.Drawing.Size(628, 342);
+            this.listBox2.TabIndex = 22;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -630,7 +700,8 @@
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.button2);
             this.DoubleBuffered = true;
-            this.Name = "Form1";
+           // this.Name = "Form1";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.contextMenuStrip1.ResumeLayout(false);
@@ -640,6 +711,7 @@
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            this.contextMenuStrip2.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
@@ -701,6 +773,12 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn name3;
         private System.Windows.Forms.DataGridViewTextBoxColumn factory3;
         private System.Windows.Forms.DataGridViewTextBoxColumn price3;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip2;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.Button button11;
+        private System.Windows.Forms.Button button12;
+        private System.Windows.Forms.Button button13;
+        private System.Windows.Forms.ListBox listBox2;
     }
 }
 

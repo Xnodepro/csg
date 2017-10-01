@@ -29,12 +29,14 @@ namespace CSMONEY
             {
                 try
                 {
+                    while (Program.pauseLoot == true)
+                    {
+                        Thread.Sleep(200);
+                    }
                     Program.MessLoot.Enqueue("БОТ[" + ID + "] " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "|" + "Завершил загрузку предметов.");
                     var res = ClickItem(driver.PageSource);
                     if (res == true)
                     {
-                        //    CloseModalFrm();
-                        // RefreshBotInventory();
                         var first = Convert.ToInt32(DateTime.Now.ToString("HHmmss"));
                     }
                     if (Convert.ToInt32(DateTime.Now.ToString("HHmmss")) - firstFull > 200)
@@ -100,14 +102,7 @@ namespace CSMONEY
         }
 
 
-        //private bool chekFinishDownload(string kode)
-        //{
-        //    HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
-        //    doc.LoadHtml(driver.PageSource);
-        //    var item = doc.DocumentNode.SelectNodes("//div[@id=\"inventory_bot\"]").FirstOrDefault().InnerHtml;
-        //    if (item != "") { return true; }
-        //    return false;
-        //}
+
         private bool ClickItem(string kode)
         {
             HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
@@ -121,7 +116,7 @@ namespace CSMONEY
                     foreach (var item2 in Program.DataLoot)
                     {
                         string name1 = item1.FirstChild.Attributes["data-name"].Value.Replace(" ", "");
-                        string name2 = (item2.Name + "(" + item2.Factory + ")").Replace(" ", "");
+                        string name2 = (item2.Name ).Replace(" ", "");
                         if (name1 == name2 && (Convert.ToInt32(item1.FirstChild.Attributes["data-p"].Value) / 100) <= item2.Price)
                         {
                             IWebElement item = driver.FindElement(By.Id(item1.FirstChild.Attributes["id"].Value));
@@ -144,7 +139,7 @@ namespace CSMONEY
                                 Program.MessLoot.Enqueue("БОТ[" + ID + "] " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "| Убрал предмет с верхнего блока:" + name1);
                             }
                             catch (Exception ex) { }
-            return true;
+                        return true;
                         }
                     }
                 }

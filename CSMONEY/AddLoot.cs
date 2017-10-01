@@ -50,5 +50,10 @@ namespace CSMONEY
             }
 
         }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            textBox2.Text = Clipboard.GetText();
+        }
     }
 }

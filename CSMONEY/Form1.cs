@@ -119,7 +119,8 @@ namespace CSMONEY
                 {
                     for (int i = 0; i < Program.MessLoot.Count; i++)
                     {
-                        textBox5.Text = Program.MessLoot.Dequeue() + Environment.NewLine + textBox5.Text;
+                        listBox2.Items.Insert(0, Program.MessLoot.Dequeue());
+                       
                     }
                 }
                 if (Program.MessCsTrade.Count != 0)
@@ -179,6 +180,7 @@ namespace CSMONEY
               //  var a = Properties.Settings.Default.lootfarm;
                 button1.Enabled = true;
                 button4.Enabled = true;
+                button11.Enabled = true;
                 textBox4.Enabled = true;
             }
         }
@@ -189,6 +191,7 @@ namespace CSMONEY
               //  var a = Properties.Settings.Default.lootfarm;
                 button5.Enabled = true;
                 button6.Enabled = true;
+                button12.Enabled = true;
                 textBox7.Enabled = true;
             }
         }
@@ -211,9 +214,16 @@ namespace CSMONEY
             }
             File.WriteAllText("./logCsMoney/" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-fff")+".txt", tmp);
             listBox1.Items.Clear();
+
             tmp = "";
-            File.WriteAllText("./logLoot/" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-fff") + ".txt", textBox5.Text);
-            textBox5.Text = "";
+            foreach (var item in listBox2.Items)
+            {
+                tmp = tmp + item + Environment.NewLine;
+            }
+            File.WriteAllText("./logLoot/" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-fff") + ".txt", tmp);
+            listBox2.Items.Clear();
+
+            tmp = "";
             File.WriteAllText("./logCsTrade/" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-fff") + ".txt", textBox9.Text);
             textBox9.Text = "";
         }
@@ -282,6 +292,52 @@ namespace CSMONEY
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
             
+        }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            Environment.Exit(0);
+
+        }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            int index = dataGridView2.CurrentCell.RowIndex;
+            dataGridView2.Rows.RemoveAt(index);
+            Program.DataLoot.RemoveAt(index);
+            string json = JsonConvert.SerializeObject(Program.DataLoot);
+            File.WriteAllText("dataLootFarm.txt", json);
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            if (!Program.pauseMoney)
+            {
+                Program.pauseMoney = true;
+                button11.BackColor = Color.YellowGreen;
+                Program.Mess.Enqueue( DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "|" + "Пауза установлена!");
+            }
+            else {
+                Program.pauseMoney = false;
+                button11.BackColor = Color.White;
+                Program.Mess.Enqueue(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "|" + "Пауза снята!");
+            }
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            if (!Program.pauseLoot)
+            {
+                Program.pauseLoot = true;
+                button12.BackColor = Color.YellowGreen;
+                Program.MessLoot.Enqueue(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "|" + "Пауза установлена!");
+            }
+            else
+            {
+                Program.pauseLoot = false;
+                button12.BackColor = Color.White;
+                Program.MessLoot.Enqueue(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "|" + "Пауза снята!");
+            }
         }
     }
 }

@@ -28,7 +28,7 @@ namespace CSMONEY
             {
                 Id = unixTimestamp,
                 Name = textBox2.Text,
-                Factory = comboBox1.Text,
+                //Factory = comboBox1.Text,
                 Price = Convert.ToDouble(textBox3.Text.Replace(".", ","))
             };
             Program.DataCsTrade.Add(item);
@@ -45,10 +45,15 @@ namespace CSMONEY
                 DataGridViewRow row = DGV.Rows[rowId];
                 row.Cells["id3"].Value = item.Id;
                 row.Cells["name3"].Value = item.Name;
-                row.Cells["factory3"].Value = item.Factory;
+            //    row.Cells["factory3"].Value = item.Factory;
                 row.Cells["price3"].Value = item.Price;
             }
 
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            textBox2.Text = Clipboard.GetText();
         }
     }
 }

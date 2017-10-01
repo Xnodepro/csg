@@ -44,7 +44,7 @@ namespace CSMONEY
             {
                 int rowId = DGV.Rows.Add();
                 DataGridViewRow row = DGV.Rows[rowId];
-                row.Cells["Id"].Value = item.Id;
+                row.Cells["id2"].Value = item.Id;
                 row.Cells["Name"].Value = item.Name;
               //  row.Cells["Factor"].Value = item.Factory;
                 row.Cells["Price"].Value = item.Price;
