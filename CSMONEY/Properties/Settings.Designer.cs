@@ -106,5 +106,53 @@ namespace CSMONEY.Properties {
                 this["CsTradeVersion"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public long IdChatBot {
+            get {
+                return ((long)(this["IdChatBot"]));
+            }
+            set {
+                this["IdChatBot"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string ApiKey {
+            get {
+                return ((string)(this["ApiKey"]));
+            }
+            set {
+                this["ApiKey"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string CsTSF {
+            get {
+                return ((string)(this["CsTSF"]));
+            }
+            set {
+                this["CsTSF"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string CsTSFVersion {
+            get {
+                return ((string)(this["CsTSFVersion"]));
+            }
+            set {
+                this["CsTSFVersion"] = value;
+            }
+        }
     }
 }

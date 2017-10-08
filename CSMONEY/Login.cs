@@ -24,6 +24,7 @@ namespace CSMONEY
             bool checkcsMoney = false;
             bool checkcsloot = false;
             bool checkcstrade = false;
+            bool checkcstsf = false;
             foreach (DataRow item in dt.Rows)
             {
                 var s = item.ItemArray;
@@ -65,6 +66,18 @@ namespace CSMONEY
                             Application.Exit();
                         }
                     }
+                    if (s[4].ToString() == "https://tradeskinsfast.com/")
+                    {
+                        checkcstsf = true;
+                        Properties.Settings.Default.CsTSF = s[1].ToString();
+                        Properties.Settings.Default.name = textBox1.Text;
+                        Properties.Settings.Default.Save();
+                        if (s[3].ToString() != Properties.Settings.Default.CsTSFVersion)
+                        {
+                            MessageBox.Show("Версия ПО устарела");
+                            Application.Exit();
+                        }
+                    }
                     //Program.sleepILoot = Convert.ToInt32(s[2].ToString());
                     chek = true;
                 }
@@ -84,12 +97,22 @@ namespace CSMONEY
                 Properties.Settings.Default.CsTrade = "";
                 Properties.Settings.Default.Save();
             }
+            if (checkcstsf == false)
+            {
+                Properties.Settings.Default.CsTSF = "";
+                Properties.Settings.Default.Save();
+            }
             if (chek == false)
             {
                 MessageBox.Show("Программа не лицензированная");
                 Application.Exit();
             }
             else { Form1 f1 = new Form1();f1.Show(); this.Hide(); }
+        }
+
+        private void Login_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

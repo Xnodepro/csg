@@ -11,20 +11,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WebSocketSharp;
+
+
+using System.Net;
 
 namespace CSMONEY
 {
     public partial class Form1 : Form
     {
-       
+        int Id = 0;
+        int IdLoot = 0;
+        int IdCsTrade = 0;
         public Form1()
         {
             InitializeComponent();
             timer1.Start();
-        }
-        int Id = 0;
-        int IdLoot = 0;
-        int IdCsTrade = 0;
+        } 
+
         private void button1_Click(object sender, EventArgs e)
         {
             Work w = new Work( Id);
@@ -32,11 +36,6 @@ namespace CSMONEY
                 w.INI();
             }).Start();
             Id++;
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -62,7 +61,7 @@ namespace CSMONEY
                 DataGridViewRow row = dataGridView1.Rows[rowId];
                 row.Cells["id2"].Value = item.Id;
                 row.Cells["Name"].Value = item.Name;
-               // row.Cells["Factor"].Value = item.Factory;
+                row.Cells["Factor"].Value = item.Factory;
                 row.Cells["Price"].Value = item.Price;
             }
            
@@ -103,6 +102,24 @@ namespace CSMONEY
             catch (Exception ex) { }
 
         }
+        private void RefreshGridCsTSF()
+        {
+            dataGridView4.Rows.Clear();
+            try
+            {
+                foreach (var item in Program.DataTSF)
+                {
+                    int rowId = dataGridView4.Rows.Add();
+                    DataGridViewRow row = dataGridView4.Rows[rowId];
+                    row.Cells["id3"].Value = item.Id;
+                    row.Cells["name3"].Value = item.Name;
+                    //  row.Cells["factory3"].Value = item.Factory;
+                    row.Cells["price3"].Value = item.Price;
+                }
+            }
+            catch (Exception ex) { }
+
+        }
         private void timer1_Tick(object sender, EventArgs e)
         {
             try
@@ -130,25 +147,33 @@ namespace CSMONEY
                         textBox9.Text = Program.MessCsTrade.Dequeue() + Environment.NewLine + textBox9.Text;
                     }
                 }
+                //if (Program.MessTelegram.Count != 0)
+                //{
+                //    for (int i = 0; i < Program.MessTelegram.Count; i++)
+                //    {
+                //        SendTelegram(Program.MessTelegram.Dequeue());
+                //       // textBox9.Text = Program.MessTelegram.Dequeue() + Environment.NewLine + textBox9.Text;
+                //    }
+                //}
+               
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                string s = ex.Message;
             }
             
         }
-
         private void textBox4_TextChanged(object sender, EventArgs e)
         {
             Program.sleepMSecond = Convert.ToInt32(textBox4.Text);
         }
-
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            textBox13.Text = Properties.Settings.Default.ApiKey;
             enableCSMoney();
             enableLoot();
             enableCsTrade();
+            enableCsTSF();
             timer2.Start();
             try
             {
@@ -169,9 +194,15 @@ namespace CSMONEY
             {
                 Program.DataCsTrade = JsonConvert.DeserializeObject<List<Program.Dat>>(lk);
             }
+            string lq = File.ReadAllText("dataCsTSF.txt");
+            if (lq != "")
+            {
+                Program.DataTSF = JsonConvert.DeserializeObject<List<Program.Dat>>(lq);
+            }
             RefreshGrid();
             RefreshGridLootFarm();
             RefreshGridCsTrade();
+            RefreshGridCsTSF();
         }
         private void enableCSMoney()
         {
@@ -205,6 +236,16 @@ namespace CSMONEY
                 textBox11.Enabled = true;
             }
         }
+        private void enableCsTSF()
+        {
+            if (Properties.Settings.Default.CsTSF != "")
+            {
+                //  var a = Properties.Settings.Default.lootfarm;
+                button15.Enabled = true;
+                button14.Enabled = true;
+                textBox12.Enabled = true;
+            }
+        }
         private void timer2_Tick(object sender, EventArgs e)
         {
             string tmp = "";
@@ -227,19 +268,16 @@ namespace CSMONEY
             File.WriteAllText("./logCsTrade/" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-fff") + ".txt", textBox9.Text);
             textBox9.Text = "";
         }
-
         private void button4_Click(object sender, EventArgs e)
         {
             Add a = new Add(dataGridView1);
             a.Show();
         }
-
         private void button5_Click(object sender, EventArgs e)
         {
             AddLoot a = new AddLoot(dataGridView2);
             a.Show();
         }
-
         private void button6_Click(object sender, EventArgs e)
         {
             LootFarm w = new LootFarm(textBox5, IdLoot);
@@ -248,12 +286,10 @@ namespace CSMONEY
             }).Start();
             IdLoot++;
         }
-
         private void textBox7_TextChanged(object sender, EventArgs e)
         {
             Program.sleepMSecondLoot = Convert.ToInt32(textBox7.Text);
         }
-
         private void button9_Click(object sender, EventArgs e)
         {
             // CsTrade trade = new CsTrade(textBox9, 1);
@@ -263,23 +299,15 @@ namespace CSMONEY
             }).Start();
             IdCsTrade++;
         }
-
         private void button8_Click(object sender, EventArgs e)
         {
             AddCsTrade a = new AddCsTrade(dataGridView3);
             a.Show();
         }
-
         private void textBox11_TextChanged(object sender, EventArgs e)
         {
             Program.sleepMCsTrade = Convert.ToInt32(textBox11.Text);
         }
-
-        private void contextMenuStrip1_Opening(object sender, CancelEventArgs e)
-        {
-          
-        }
-
         private void удалитьToolStripMenuItem_Click(object sender, EventArgs e)
         {
             int index = dataGridView1.CurrentCell.RowIndex;
@@ -288,18 +316,11 @@ namespace CSMONEY
             string json = JsonConvert.SerializeObject(Program.Data);
             File.WriteAllText("data.txt", json);
         }
-
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-            
-        }
-
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
             Environment.Exit(0);
 
         }
-
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
             int index = dataGridView2.CurrentCell.RowIndex;
@@ -308,7 +329,6 @@ namespace CSMONEY
             string json = JsonConvert.SerializeObject(Program.DataLoot);
             File.WriteAllText("dataLootFarm.txt", json);
         }
-
         private void button11_Click(object sender, EventArgs e)
         {
             if (!Program.pauseMoney)
@@ -323,7 +343,6 @@ namespace CSMONEY
                 Program.Mess.Enqueue(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "|" + "Пауза снята!");
             }
         }
-
         private void button12_Click(object sender, EventArgs e)
         {
             if (!Program.pauseLoot)
@@ -338,6 +357,106 @@ namespace CSMONEY
                 button12.BackColor = Color.White;
                 Program.MessLoot.Enqueue(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "|" + "Пауза снята!");
             }
+        }
+        public struct Dat
+        {
+            public string Event { get; set; }
+            data data { get; set; }
+           
+        }
+        public struct data
+        {
+            List<Data> Data { get; set; }
+        }
+        public struct Data
+        {
+            public List<string> b { get; set; }
+            public List<string> id { get; set; }
+            public string m { get; set; }
+            public string e { get; set; }
+            public double p { get; set; }
+            public Data(List<string> B, List<string> ID, string M ,string E, double P)
+            {
+                b = B;
+                id = ID;
+                m = M;
+                e = E;
+                p = P;
+
+
+            }
+            //  public string id { get; set; }
+        }
+        private void button14_Click(object sender, EventArgs e)
+        {
+            string json = File.ReadAllText("jj.txt");
+            var da = JsonConvert.DeserializeObject<dynamic>(json.Replace("event","Event"));
+            var aa =da.Event.Value;
+            foreach (var item in da.data)
+            {
+                var b = item.b[0].Value;
+                var id = item.id[0].Value;
+                var ee = item.e.Value;
+                var m = item.m.Value;
+                var p = item.p.Value;
+            }
+
+        }
+        private void asas()
+        {
+
+            var ws = new WebSocket("wss://cs.money/ws");
+            ws.SetCookie(new WebSocketSharp.Net.Cookie("name", "nobita"));
+            ws.OnMessage += (sender, e) =>
+            {
+                try
+                {
+                    Program.Mess.Enqueue(System.Text.Encoding.UTF8.GetString(e.RawData));
+                }
+                catch (Exception ex) {
+                    string ss="";
+                }
+            };
+       //     Console.WriteLine("Laputa says: " + e.Data);
+
+                ws.Connect();
+             //   ws.Send("BALUS");
+            //    Console.ReadKey(true);
+            
+        }
+        private void button14_Click_1(object sender, EventArgs e)
+        {
+
+            var cookies = new List<System.Net.Cookie>
+            {
+                new System.Net.Cookie("sessionid","0c91501fec9c30d03decded8",string.Empty, "steamcommunity.com"),
+                new System.Net.Cookie("steamLogin","76561198405411962%7C%7C3611ED393F3D94D3FACFF1DFF911138A6B3C1947",string.Empty, "steamcommunity.com"),
+                new System.Net.Cookie("steamLoginSecure","76561198405411962%7C%7CF4F79B0E885AAA0749E8BDFE14750218A41286A5",string.Empty,"steamcommunity.com")
+            };
+            string apiKey = "DBFC9AFAA97E27ADF7E4C6EF2E125D3F";
+           
+            //OfferSession newSteamSession = new OfferSession('yourApiKey', 'steamweb');
+
+            //string convertedStringtradeId = String.Empty;
+            //newSteamSession.
+            //var isAccepted = newSteamSession.Accept(tradeOfferId, convertedStringtradeId);
+
+            //if (isAccepted)
+            //{
+            //    //do more logic here if the offer was good
+            //    //you can use the convertedStringtradeId if you need something
+
+
+            //}
+            //else
+            //{
+            //    //what happens when things go wrong
+            //}
+        }
+        private void textBox13_TextChanged(object sender, EventArgs e)
+        {
+            Properties.Settings.Default.ApiKey = textBox13.Text;
+            Properties.Settings.Default.Save();
         }
     }
 }

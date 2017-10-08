@@ -23,19 +23,69 @@ namespace CSMONEY
 
         private void button1_Click(object sender, EventArgs e)
         {
+            string factory = "";
             Int32 unixTimestamp = (Int32)(DateTime.UtcNow.Subtract(new DateTime(1970, 1, 1))).TotalSeconds;
-            // textBox1.Text = driver.PageSource;
-            var item = new Program.Dat
+            if (!checkBox1.Checked)
             {
-                Id = unixTimestamp,
-                Name = textBox2.Text,
-               // Factory = comboBox1.Text,
-                Price = Convert.ToDouble(textBox3.Text.Replace(".", ","))
-            };
-            Program.Data.Add(item);
-            RefreshGrid();
-            string json = JsonConvert.SerializeObject(Program.Data);
-            File.WriteAllText("data.txt", json);
+                string tms = textBox2.Text.Split('(')[1].Replace(")", "").Replace("(", "").Replace(" ", "");
+                switch (tms)
+                {
+                    case "MinimalWear": factory = "MW"; break;
+                    case "FactoryNew": factory = "FN"; break;
+                    case "Field-Tested": factory = "FT"; break;
+                    case "Battle-Scarred": factory = "BS"; break;
+                    case "Well-Worn": factory = "WW"; break;
+                }
+                var item = new Program.Dat
+                {
+                    Id = unixTimestamp,
+                    Name = textBox2.Text.Split('(')[0],
+                    Factory = factory,
+                    Price = Convert.ToDouble(textBox3.Text.Replace(".", ","))
+                };
+                DialogResult result = MessageBox.Show("Вы добавляете СТАНДАРТНЫЙ предмет","", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result == DialogResult.No) //Если нажал нет
+                {
+                    MessageBox.Show("Не добавил!");
+                }
+
+                if (result == DialogResult.Yes) //Если нажал Да
+                {
+                    Program.Data.Add(item);
+                    RefreshGrid();
+                    string json = JsonConvert.SerializeObject(Program.Data);
+                    File.WriteAllText("data.txt", json);
+                    MessageBox.Show("Добавил!");
+                }
+                
+            }
+            else {
+                var item = new Program.Dat
+                {
+                    Id = unixTimestamp,
+                    Name = textBox2.Text,
+                    Factory = factory,
+                    Price = Convert.ToDouble(textBox3.Text.Replace(".", ","))
+                };
+                DialogResult result = MessageBox.Show("Вы добавляете СТИКЕР или ДРУГОЙ предмет", "", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result == DialogResult.No) //Если нажал нет
+                {
+                    MessageBox.Show("Не добавил!");
+                }
+
+                if (result == DialogResult.Yes) //Если нажал Да
+                {
+                    Program.Data.Add(item);
+                    RefreshGrid();
+                    string json = JsonConvert.SerializeObject(Program.Data);
+                    File.WriteAllText("data.txt", json);
+                    MessageBox.Show("Добавил!");
+                }
+                
+            }
+            
         }
         private void RefreshGrid()
         {
@@ -46,7 +96,7 @@ namespace CSMONEY
                 DataGridViewRow row = DGV.Rows[rowId];
                 row.Cells["id2"].Value = item.Id;
                 row.Cells["Name"].Value = item.Name;
-              //  row.Cells["Factor"].Value = item.Factory;
+                row.Cells["Factor"].Value = item.Factory;
                 row.Cells["Price"].Value = item.Price;
             }
 

@@ -13,6 +13,8 @@ using System.Data;
 using System.Net.Http;
 using Newtonsoft.Json;
 using System.Net;
+using WebSocketSharp;
+using System.IO;
 
 namespace CSMONEY
 {
@@ -20,17 +22,22 @@ namespace CSMONEY
     {
         IWebDriver driver;
         int ID=0;
-        List<Data> ITEMS = new List<Data>();
-        CookieContainer cookies = new CookieContainer();
-        HttpClientHandler handler = new HttpClientHandler();
-
-        public struct Data
+        
+        List<System.Net.Cookie> cook;
+        List<System.Net.Cookie> cookAll;
+        string apiKey = Properties.Settings.Default.ApiKey;
+        public struct Dat
         {
-            public List<string> b { get; set; }
-            public List<string> id { get; set; }
+            public string Event { get; set; }
+            inData data { get; set; }
+        }
+        public struct inData
+        {
+            //public List<string> b { get; set; }
+            //public List<string> id { get; set; }
             public string m { get; set; }
+            public string e { get; set; }
             public double p { get; set; }
-
           //  public string id { get; set; }
         }
         public Work( int id)
@@ -38,60 +45,56 @@ namespace CSMONEY
             ID = id;
          //   Get();
         }
-        public void start()
-        {
-            var firstFull = Convert.ToInt32(DateTime.Now.ToString("HHmmss"));
-            while (true)
-            {
-                try
-                {
-                    while (Program.pauseMoney==true)
-                    {
-                        Thread.Sleep(200);
-                    }
-                    //Program.Mess.Enqueue("БОТ[" + ID + "] " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "|" + "Завершил загрузку предметов.");
+        //public void start()
+        //{
+        //    var firstFull = Convert.ToInt32(DateTime.Now.ToString("HHmmss"));
+        //    while (true)
+        //    {
+        //        try
+        //        {
+        //            while (Program.pauseMoney==true)
+        //                Thread.Sleep(200);
 
-                    var res = ClickItem(driver.PageSource);
-                    if (res == true)
-                    {
-                        //CloseModalFrm();
-                        RefreshBotInventory();
-                        var first = Convert.ToInt32(DateTime.Now.ToString("HHmmss"));
-                    }
-                    if (Convert.ToInt32(DateTime.Now.ToString("HHmmss")) - firstFull > 200)
-                    {
-                        bool cheek = false;
-                        var dt = DataTa.GetTable();
-                        foreach (DataRow item in dt.Rows)
-                        {
-                            var s = item.ItemArray;
-                            if (s[0].ToString() == Properties.Settings.Default.name && s[1].ToString() == Properties.Settings.Default.csmoney)
-                            {
-                                cheek = true;
-                                if (s[3].ToString() != Properties.Settings.Default.csmoneyVersion)
-                                {
-                                    MessageBox.Show("Версия ПО устарела");
-                                    Application.Exit();
-                                }
-                                Program.sleepIMONEY = Convert.ToInt32(s[2].ToString());
-                            }
-                           
-                        }
-                        if (cheek == false)
-                        {
-                            MessageBox.Show("Лицензия не активная.");
-                            Application.Exit();
-                        }
-                        firstFull = Convert.ToInt32(DateTime.Now.ToString("HHmmss"));
-                        RefreshBotInventory();
-                        Program.Mess.Enqueue("БОТ[" + ID + "] " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "|" + "{Правило 200сек.}Обновил инвентари!");
+        //            var res = ClickItem(ITEMS);
+        //            if (res == true)
+        //            {
+        //                var first = Convert.ToInt32(DateTime.Now.ToString("HHmmss"));
+        //            }
+        //            if (Convert.ToInt32(DateTime.Now.ToString("HHmmss")) - firstFull > 200)
+        //            {
+        //                bool cheek = false;
+        //                var dt = DataTa.GetTable();
+        //                foreach (DataRow item in dt.Rows)
+        //                {
+        //                    var s = item.ItemArray;
+        //                    if (s[0].ToString() == Properties.Settings.Default.name && s[1].ToString() == Properties.Settings.Default.csmoney)
+        //                    {
+        //                        cheek = true;
+        //                        if (s[3].ToString() != Properties.Settings.Default.csmoneyVersion)
+        //                        {
+        //                            MessageBox.Show("Версия ПО устарела");
+        //                            Application.Exit();
+        //                        }
+        //                        Program.sleepIMONEY = Convert.ToInt32(s[2].ToString());
+        //                    }
+        //                }
+        //                if (cheek == false)
+        //                {
+        //                    MessageBox.Show("Лицензия не активная.");
+        //                    Application.Exit();
+        //                }
+        //                firstFull = Convert.ToInt32(DateTime.Now.ToString("HHmmss"));
+        //                RefreshBotInventory();
+        //                Program.Mess.Enqueue("БОТ[" + ID + "] " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "|" + "{Правило 200сек.}Обновил инвентари!");
 
-                    }
-                    Thread.Sleep(Program.sleepMSecond);
-                }
-                catch (Exception ex) { }
-            }
-        }
+        //            }
+        //            Thread.Sleep(Program.sleepMSecond);
+        //        }
+        //        catch (Exception ex) { }
+        //    }
+        //}
+
+ 
         public void INI()
         {
             try
@@ -101,34 +104,92 @@ namespace CSMONEY
                 driver = new ChromeDriver(driverService);
                 driver.Navigate().GoToUrl("https://cs.money/ru");
                 MessageBox.Show("Введите все данные , после этого программа продолжит работу!");
+                CookieContainer cookies = new CookieContainer();
+                HttpClientHandler handler = new HttpClientHandler();
                 var _cookies = driver.Manage().Cookies.AllCookies;
+                var ws = new WebSocket("wss://cs.money/ws");
+                
                 foreach (var item in _cookies)
                 {
                     handler.CookieContainer.Add(new System.Net.Cookie(item.Name, item.Value) { Domain = item.Domain });
+                    ws.SetCookie(new WebSocketSharp.Net.Cookie(item.Name, item.Value));
                 }
-                
+
                 driver.Manage().Window.Position = new Point(5000, 5000);
                 driver.Navigate().GoToUrl("https://steamcommunity.com/id/me/tradeoffers/privacy#trade_offer_access_url");
                 IWebElement offer = driver.FindElement(By.Id("trade_offer_access_url"));
-
                 if (offer.GetAttribute("value") != Properties.Settings.Default.csmoney)
                 {
                     MessageBox.Show("Выберите аккаунт к которому привязана программа!");
                     driver.Quit();
                     return;
                 }
+
+                driver.Navigate().GoToUrl("https://store.steampowered.com/account/");
+
+                var _cookiesSteam = driver.Manage().Cookies.AllCookies;
+                cook = new List<System.Net.Cookie>();
+                 cookAll = new List<System.Net.Cookie>();
+                foreach (var item in _cookiesSteam)
+                {
+                    if (item.Name == "sessionid" || item.Name == "steamLogin" || item.Name == "steamLoginSecure")
+                    {
+                        cook.Add(new System.Net.Cookie(item.Name, item.Value, string.Empty, "steamcommunity.com"));
+                        
+                    }
+
+                    if (item.Name != "timezoneOffset" )
+                    {
+                        cookAll.Add(new System.Net.Cookie(item.Name, item.Value, string.Empty, "steamcommunity.com"));
+                    }
+                        
+                }
+                cookAll.Add(new System.Net.Cookie("bCompletedTradeOfferTutorial", "true", string.Empty, "steamcommunity.com"));
+                
+
+
                 driver.Navigate().GoToUrl("https://cs.money/ru");
                 driver.Manage().Window.Position = new Point(0, 0);
-                for (int i = 0; i < 10; i++)
+                ws.OnMessage += (sender, e) =>
                 {
-                    new System.Threading.Thread(delegate () {
-                        Get();
-                    }).Start();
-                    Thread.Sleep(500);
+                    try
+                    {
+                        var da = JsonConvert.DeserializeObject<dynamic>(e.Data.Replace("event", "Event"));
+                        if (da.Event.Value == "add_items")
+                        {
+                            ClickItem(da);
+                            var countAddItems = da.data.Count;
+                            Program.Mess.Enqueue(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") +"|Добавлено предметов на сайт:"+ countAddItems);
+                            
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        string ss = "";
+                    }
+                };
+                ws.Connect();
+                var firstFull = Convert.ToInt32(DateTime.Now.ToString("HHmmss"));
+                while (true)
+                {
+                    if (Convert.ToInt32(DateTime.Now.ToString("HHmmss")) - firstFull > 100 )
+                    {
+                        firstFull = Convert.ToInt32(DateTime.Now.ToString("HHmmss"));
+                        ws.Close();
+                        ws.Connect();
+                        Program.Mess.Enqueue("Поднял подключение к серверу CSMONEY");
+                    }
+                    if (ws.ReadyState.ToString()=="Closed")
+                    {
+                        ws.Connect();
+                        Program.Mess.Enqueue("Поднял подключение к серверу CSMONEY");
+                    }
+                //    Program.Mess.Enqueue("Статус подключения к сервру:"+ws.ReadyState.ToString());
+                    Thread.Sleep(3000);
                 }
-                start();
             }
             catch (Exception ex) { }
+            
         }
     
         private bool chekFinishDownload(string kode)
@@ -143,47 +204,70 @@ namespace CSMONEY
             catch (Exception ex) { }
             return false;
         }
-        private bool ClickItem(string kode)
+        private bool ClickItem(dynamic json)
         {
-            HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
-            doc.LoadHtml(kode);
             try
             {
-                var nodes = doc.DocumentNode.SelectNodes("//div[@id=\"inventory_bot\"]").FirstOrDefault();
-                    var nodes1 = nodes.ChildNodes.Where(n => (n.Name == "div"));
-                    foreach (var item1 in nodes1)
-                    {
-                        foreach (var item2 in Program.Data)
-                        {
-                            string name1 = item1.Attributes["hash"].Value.Replace(" ","");
-                            string name2 = (item2.Name ).Replace(" ", "");
-                            if (name1 == name2)
-                            {
-                            
-                               string val = item1.Attributes["cost"].Value.Replace(".", ",");
-                               double i1 = Convert.ToDouble(val);
-                               Program.Mess.Enqueue("БОТ[" + ID + "] " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "| Нашел предмет :" + item2.Name + " ||Цена :"+i1);
-                               if (i1 <= item2.Price)
-                               {
-                                  // var a1 = DateTime.Now.Second + ":" + DateTime.Now.Millisecond;
-                                   IJavaScriptExecutor js = driver as IJavaScriptExecutor;
-                               
-                                    string title = (string)js.ExecuteScript("document.getElementById(" + item1.Attributes["id"].Value + ").click();");
-                                    Program.Mess.Enqueue("БОТ[" + ID + "] " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "| Выбрал предмет :" + item2.Name);
+                var da = json;
+                var aa = da.Event.Value;
+                foreach (var item in da.data)
+                {
 
-                                    Program.Mess.Enqueue("БОТ[" + ID + "] " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "| Нажал [Обмен] :" + item2.Name );
-                                    Thread.Sleep(Program.sleepIMONEY);
-                                    string title2 = (string)js.ExecuteScript("document.getElementById(\"trade-btn\").click();");
-                                    return true;
-                               }
-                                else {
-                                  Program.Mess.Enqueue("БОТ[" + ID + "] " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "| Предмет :" + item2.Name  + "+||Ценник сайт:"+ i1.ToString()+"--Цена База:"+ item2.Price.ToString());
+                    var b = item.b[0].Value;
+                    var id = item.id[0].Value;
+                    var m = item.m.Value;
+                    var p = item.p.Value;
+                    string ee = "";
+                    try
+                    {
+                        ee = item.e.Value;
+                    }
+                    catch (Exception ex) { }
+
+                    foreach (var name in Program.Data)
+                    {
+
+                        if (m.Replace(" ", "") == (name.Name).Replace(" ", "") && ee == name.Factory)
+                        {
+                            Program.Mess.Enqueue("БОТ[" + ID + "] " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "| Нашел предмет :" + m + "|Цена_Сайта:" + p + "|Цена_Наша:" + name.Price);
+                            if (p <= name.Price)
+                            {
+                                IJavaScriptExecutor js = driver as IJavaScriptExecutor;
+
+                                Thread.Sleep(Program.sleepICsTrade);
+                                //string ss = "var xhr=new XMLHttpRequest();" + "var body=\"{\\\"steamid\\\":\\\"" + item.b[0].ToString() + "\\\",\\\"peopleItems\\\":[],\\\"botItems\\\":[\\\"" + item.id[0].ToString() + "\\\"],\\\"onWallet\\\":-" + item.p.ToString() + "}\";" + "xhr.open(\"\\\"POST\\\",'https://cs.money/send_offer',true);\"" + "xhr.setRequestHeader('Content-Type', 'application/json');" + "xhr.setRequestHeader('x-requested-with', 'XMLHttpRequest');xhr.setRequestHeader('accept', '*/*');" + "xhr.send(body);";
+                                string ss1 = "var xhr = new XMLHttpRequest();var body = \"{\\\"steamid\\\":\\\"" + b.ToString() + "\\\",\\\"peopleItems\\\":[],\\\"botItems\\\":[\\\"" + id.ToString() + "\\\"],\\\"onWallet\\\":-" + p.ToString().Replace(",", ".") + "}\"; xhr.open(\"POST\", 'https://cs.money/send_offer', true); xhr.setRequestHeader('Content-Type', 'application/json'); xhr.setRequestHeader('x-requested-with', 'XMLHttpRequest'); xhr.setRequestHeader('accept', '*/*'); xhr.send(body); ";
+                               // Program.Mess.Enqueue("БОТ[" + ID + "] " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "|" + ss1);
+
+                                for (int i = 0; i < 20; i++)
+                                {
+                                    
+                                        new System.Threading.Thread(delegate ()
+                                        {
+                                            try
+                                            {
+                                              string title = (string)js.ExecuteScript(ss1);
+                                            }
+                                            catch (Exception ex) { }
+                                        }).Start();
+                                    
                                 }
+                                
+                                
+                                Program.Mess.Enqueue("БОТ[" + ID + "] " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "| Оправил Запрос");
+                                Program.MessTelegram.Enqueue("БОТ[CsMoney]" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "|Оправил Запрос на предмет:" + m+"|Цена:"+ p);
+                               // TradingBot tradeBot = new TradingBot(cook, cookAll, apiKey);
+                                //      TradingBot tradeBot = new TradingBot(cook, apiKey);
+                                Thread.Sleep(5000);
+                                return true;//main-trade-button
                             }
+
                         }
                     }
+
+                }
             }
-            catch (Exception ex) { Program.Mess.Enqueue("БОТ[" + ID + "] Вывод с модуля клика:" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "|" + ex.Message); }
+            catch (Exception ex) { }
             return false;
         }
         private bool ChekItemsOffer(string name)
@@ -231,41 +315,34 @@ namespace CSMONEY
             Program.Mess.Enqueue("БОТ[" + ID + "] " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "| Обновил инвентарь пользователя");
             string title = (string)js.ExecuteScript("document.getElementById('refresh_user_inventory').click();");
         }
-        private void Get()
-        {
-            
-            while (true)
-            {
-                try
-                {
-                    HttpClient client = null;
+        //private void Get(HttpClientHandler handler)
+        //{
+        //    HttpClientHandler handler1 = handler;
+        //    HttpClient client = null;
+
+        //    client = new HttpClient(handler1);
+        //    while (true)
+        //    {
+        //        try
+        //        {
+                   
+ 
+        //                var response = client.GetAsync("https://cs.money/load_bots_inventory").Result;
+        //                if (response.IsSuccessStatusCode)
+        //                {
+        //                    var responseContent = response.Content;
+        //                    string responseString = responseContent.ReadAsStringAsync().Result;
+        //                    ITEMS = JsonConvert.DeserializeObject<List<Data>>(responseString);
+        //                    Program.Mess.Enqueue("БОТ[" + ID + "] " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "|" + "Завершил загрузку предметов."+ITEMS.Count.ToString());
+        //                }
                     
-                    client = new HttpClient(handler);
-                    using (client)
-                    {
-                        //client.DefaultRequestHeaders.Add("accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
-                        //client.DefaultRequestHeaders.Add("accept-encoding", "gzip, deflate, br");
-                        //client.DefaultRequestHeaders.Add("accept-language", "ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4");
-                        //client.DefaultRequestHeaders.Add("user-agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36");
+        //            Random random = new Random();
 
-
-                        
-                        var response = client.GetAsync("https://cs.money/load_bots_inventory").Result;
-                        if (response.IsSuccessStatusCode)
-                        {
-                            var responseContent = response.Content;
-                            string responseString = responseContent.ReadAsStringAsync().Result;
-                            ITEMS = JsonConvert.DeserializeObject<List<Data>>(responseString);
-                            Program.Mess.Enqueue("БОТ[" + ID + "] " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "|" + "Завершил загрузку предметов.");
-                        }
-                    }
-                    Random random = new Random();
-
-                    Thread.Sleep(random.Next(50, 700));
-                }
-                catch (Exception ex) { }
-            }
-            // return new Data();
-        }
+        //            Thread.Sleep(random.Next(50, 700));
+        //        }
+        //        catch (Exception ex) { }
+        //    }
+        //    // return new Data();
+        //}
     }
 }

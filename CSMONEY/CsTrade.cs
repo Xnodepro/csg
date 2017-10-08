@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading;
@@ -17,8 +18,10 @@ namespace CSMONEY
     class CsTrade
     {
         IWebDriver driver;
-        TextBox Log;
         int ID = 0;
+        Data ITEMS;
+        List<System.Net.Cookie> cook;
+        List<System.Net.Cookie> cookAll;
         public struct Data {
 
          public List<inData> inventory { get; set; }
@@ -27,6 +30,7 @@ namespace CSMONEY
         public struct inData
         {
             public int bot { get; set; }
+
             public string market_hash_name { get; set; }
             public double price { get; set; }
 
@@ -43,6 +47,15 @@ namespace CSMONEY
             driver = new ChromeDriver(driverService);
             driver.Navigate().GoToUrl("https://cstrade.gg/");
             MessageBox.Show("Введите все данные , после этого программа продолжит работу!");
+
+            CookieContainer cookies = new CookieContainer();
+            HttpClientHandler handler = new HttpClientHandler();
+            var _cookies = driver.Manage().Cookies.AllCookies;
+            foreach (var item in _cookies)
+            {
+                handler.CookieContainer.Add(new System.Net.Cookie(item.Name, item.Value) { Domain = item.Domain });
+            }
+
             driver.Manage().Window.Position = new Point(5000, 5000);
             driver.Navigate().GoToUrl("https://steamcommunity.com/id/me/tradeoffers/privacy#trade_offer_access_url");
             IWebElement offer = driver.FindElement(By.Id("trade_offer_access_url"));
@@ -55,16 +68,16 @@ namespace CSMONEY
             }
             driver.Navigate().GoToUrl("https://cstrade.gg/");
             driver.Manage().Window.Position = new Point(0, 0);
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 20; i++)
             {
                 new System.Threading.Thread(delegate () {
-                    Get();
+                    Get(handler,i);
                 }).Start();
-                Thread.Sleep(500);
+                //Thread.Sleep(500);
             }
             start();
         }
-        Data ITEMS;
+        
         public void start()
         {
             var firstFull = Convert.ToInt32(DateTime.Now.ToString("HHmmss"));
@@ -115,28 +128,37 @@ namespace CSMONEY
                 Thread.Sleep(Program.sleepMCsTrade);
             }
         }
-        private void Get()
+        private void Get(HttpClientHandler handler,int id)
         {
+            HttpClientHandler handler1 = handler;
+                HttpClient client = null;
+
+                client = new HttpClient(handler1);
+            client.Timeout=TimeSpan.FromSeconds(60);
+            client.DefaultRequestHeaders.Add("User-Agent",
+ "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Safari/537.36");
+            client.DefaultRequestHeaders.Add("Accept", "application/json, text/javascript, */*; q=0.01");
+            client.DefaultRequestHeaders.Add("Accept-Language", "ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4");
+            client.DefaultRequestHeaders.Add("Cache-Control", "no-cache");
+            client.DefaultRequestHeaders.Add("Connection", "keep-alive");
             while (true)
             {
                 try
                 {
-                    HttpClient client = null;
-                    client = new HttpClient();
-                    using (client)
-                    {
+
+                    
                         var response = client.GetAsync("https://cstrade.gg/loadBotInventory").Result;
                         if (response.IsSuccessStatusCode)
                         {
                             var responseContent = response.Content;
                             string responseString = responseContent.ReadAsStringAsync().Result;
                             ITEMS = JsonConvert.DeserializeObject<Data>(responseString);
-                            Program.MessCsTrade.Enqueue("БОТ[" + ID + "] " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "|" + "Завершил загрузку предметов.");
+                            Program.MessCsTrade.Enqueue("БОТ[" + id + "] " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "|" + "Завершил загрузку предметов:"+ITEMS.inventory.Count);
                         }
-                    }
+                    
                     Random random = new Random();
 
-                    Thread.Sleep(random.Next(50, 700));
+                  //  Thread.Sleep(random.Next(50, 700));
                 }
                 catch (Exception ex) { }
             }
@@ -159,6 +181,9 @@ namespace CSMONEY
                             Thread.Sleep(Program.sleepICsTrade);
                             string trade = (string)js.ExecuteScript("document.getElementById(\"main-trade-button\").click();");
                             Program.MessCsTrade.Enqueue("БОТ[" + ID + "] " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "| Нажал ОБМЕН");
+                            Thread.Sleep(5000);
+                            driver.Navigate().Refresh();
+                            Program.MessCsTrade.Enqueue("БОТ[" + ID + "] " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "| Обновил страницу.");
                             return true;//main-trade-button
                         }
                     }
@@ -170,7 +195,7 @@ namespace CSMONEY
         private void RefreshBotInventory()
         {
             IJavaScriptExecutor js = driver as IJavaScriptExecutor;
-            Program.MessCsTrade.Enqueue("БОТ[" + ID + "] " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "| Обновил инвентарь бота");
+            Program.MessCsTrade.Enqueue("Запрос[" + ID + "] " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "| Обновил инвентарь бота");
          //   string title = (string)js.ExecuteScript("document.getElementById('UpdateBotInv').click();");
         }
     }
