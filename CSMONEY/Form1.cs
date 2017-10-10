@@ -24,6 +24,7 @@ namespace CSMONEY
         int IdLoot = 0;
         int IdCsTrade = 0;
         int IdTSF = 0;
+        int IdDeals = 0;
         public Form1()
         {
             InitializeComponent();
@@ -122,6 +123,24 @@ namespace CSMONEY
             catch (Exception ex) { }
 
         }
+        private void RefreshGridDeals()
+        {
+            dataGridView5.Rows.Clear();
+            try
+            {
+                foreach (var item in Program.DataDeals)
+                {
+                    int rowId = dataGridView5.Rows.Add();
+                    DataGridViewRow row = dataGridView5.Rows[rowId];
+                    row.Cells["id5"].Value = item.Id;
+                    row.Cells["name5"].Value = item.Name;
+                    //  row.Cells["factory3"].Value = item.Factory;
+                    row.Cells["price5"].Value = item.Price;
+                }
+            }
+            catch (Exception ex) { }
+
+        }
         #endregion
         #region rTimer
         private void timer1_Tick(object sender, EventArgs e)
@@ -156,6 +175,13 @@ namespace CSMONEY
                     for (int i = 0; i < Program.MessTSF.Count; i++)
                     {
                         listBox4.Items.Insert(0, Program.MessTSF.Dequeue());
+                    }
+                }
+                if (Program.MessDeals.Count != 0)
+                {
+                    for (int i = 0; i < Program.MessDeals.Count; i++)
+                    {
+                        listBox5.Items.Insert(0, Program.MessDeals.Dequeue());
                     }
                 }
                 //if (Program.MessTelegram.Count != 0)
@@ -208,6 +234,14 @@ namespace CSMONEY
             }
             File.WriteAllText("./logTSF/" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-fff") + ".txt", tmp);
             listBox4.Items.Clear();
+
+            tmp = "";
+            foreach (var item in listBox5.Items)
+            {
+                tmp = tmp + item + Environment.NewLine;
+            }
+            File.WriteAllText("./logDeals/" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-fff") + ".txt", tmp);
+            listBox5.Items.Clear();
         }
         #endregion
         #region Enebl
@@ -253,6 +287,16 @@ namespace CSMONEY
                 textBox12.Enabled = true;
             }
         }
+        private void enableDeals()
+        {
+            if (Properties.Settings.Default.Deals != "")
+            {
+                //  var a = Properties.Settings.Default.lootfarm;
+                button18.Enabled = true;
+                button17.Enabled = true;
+                textBox15.Enabled = true;
+            }
+        }
         #endregion
         private void textBox4_TextChanged(object sender, EventArgs e)
         {
@@ -265,6 +309,7 @@ namespace CSMONEY
             enableLoot();
             enableCsTrade();
             enableCsTSF();
+            enableDeals();
             timer2.Start();
             try
             {
@@ -290,10 +335,16 @@ namespace CSMONEY
             {
                 Program.DataTSF = JsonConvert.DeserializeObject<List<Program.Dat>>(lq);
             }
+            string lw = File.ReadAllText("dataCsDeals.txt");
+            if (lq != "")
+            {
+                Program.DataDeals = JsonConvert.DeserializeObject<List<Program.Dat>>(lw);
+            }
             RefreshGrid();
             RefreshGridLootFarm();
             RefreshGridCsTrade();
             RefreshGridCsTSF();
+            RefreshGridDeals();
         }
        
     
@@ -501,6 +552,21 @@ namespace CSMONEY
         {
             AddCsTSF a = new AddCsTSF(dataGridView4);
             a.Show();
+        }
+
+        private void button17_Click(object sender, EventArgs e)
+        {
+            AddDeals a = new AddDeals(dataGridView5);
+            a.Show();
+        }
+
+        private void button18_Click(object sender, EventArgs e)
+        {
+            Deals w = new Deals(textBox9, IdDeals);
+            new System.Threading.Thread(delegate () {
+                w.INI();
+            }).Start();
+            IdDeals++;
         }
     }
 }

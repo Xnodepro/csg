@@ -154,5 +154,29 @@ namespace CSMONEY.Properties {
                 this["CsTSFVersion"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string Deals {
+            get {
+                return ((string)(this["Deals"]));
+            }
+            set {
+                this["Deals"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("1")]
+        public string DealsVersion {
+            get {
+                return ((string)(this["DealsVersion"]));
+            }
+            set {
+                this["DealsVersion"] = value;
+            }
+        }
     }
 }

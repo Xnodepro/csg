@@ -82,10 +82,10 @@ namespace CSMONEY
                     if (s[4].ToString() == "https://ru.cs.deals/")
                     {
                         checkcdeals = true;
-                        Properties.Settings.Default.CsTSF = s[1].ToString();
+                        Properties.Settings.Default.Deals = s[1].ToString();
                         Properties.Settings.Default.name = textBox1.Text;
                         Properties.Settings.Default.Save();
-                        if (s[3].ToString() != Properties.Settings.Default.CsTSFVersion)
+                        if (s[3].ToString() != Properties.Settings.Default.DealsVersion)
                         {
                             MessageBox.Show("Версия ПО устарела");
                             Application.Exit();
@@ -113,6 +113,11 @@ namespace CSMONEY
             if (checkcstsf == false)
             {
                 Properties.Settings.Default.CsTSF = "";
+                Properties.Settings.Default.Save();
+            }
+            if (checkcdeals == false)
+            {
+                Properties.Settings.Default.Deals = "";
                 Properties.Settings.Default.Save();
             }
             if (chek == false)

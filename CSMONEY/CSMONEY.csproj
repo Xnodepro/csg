@@ -158,6 +158,12 @@
     <Compile Include="AddCsTSF.Designer.cs">
       <DependentUpon>AddCsTSF.cs</DependentUpon>
     </Compile>
+    <Compile Include="AddDeals.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AddDeals.Designer.cs">
+      <DependentUpon>AddDeals.cs</DependentUpon>
+    </Compile>
     <Compile Include="AddLoot.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -166,6 +172,7 @@
     </Compile>
     <Compile Include="CsTrade.cs" />
     <Compile Include="DB.cs" />
+    <Compile Include="Deals.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -192,6 +199,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AddCsTSF.resx">
       <DependentUpon>AddCsTSF.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AddDeals.resx">
+      <DependentUpon>AddDeals.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="AddLoot.resx">
       <DependentUpon>AddLoot.cs</DependentUpon>
