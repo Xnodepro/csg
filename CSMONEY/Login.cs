@@ -25,6 +25,7 @@ namespace CSMONEY
             bool checkcsloot = false;
             bool checkcstrade = false;
             bool checkcstsf = false;
+            bool checkcdeals = false;
             foreach (DataRow item in dt.Rows)
             {
                 var s = item.ItemArray;
@@ -69,6 +70,18 @@ namespace CSMONEY
                     if (s[4].ToString() == "https://tradeskinsfast.com/")
                     {
                         checkcstsf = true;
+                        Properties.Settings.Default.CsTSF = s[1].ToString();
+                        Properties.Settings.Default.name = textBox1.Text;
+                        Properties.Settings.Default.Save();
+                        if (s[3].ToString() != Properties.Settings.Default.CsTSFVersion)
+                        {
+                            MessageBox.Show("Версия ПО устарела");
+                            Application.Exit();
+                        }
+                    }
+                    if (s[4].ToString() == "https://ru.cs.deals/")
+                    {
+                        checkcdeals = true;
                         Properties.Settings.Default.CsTSF = s[1].ToString();
                         Properties.Settings.Default.name = textBox1.Text;
                         Properties.Settings.Default.Save();

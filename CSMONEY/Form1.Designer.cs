@@ -74,6 +74,7 @@
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.listBox3 = new System.Windows.Forms.ListBox();
             this.button13 = new System.Windows.Forms.Button();
             this.textBox9 = new System.Windows.Forms.TextBox();
             this.button8 = new System.Windows.Forms.Button();
@@ -86,6 +87,7 @@
             this.factory3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.price3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.listBox4 = new System.Windows.Forms.ListBox();
             this.button10 = new System.Windows.Forms.Button();
             this.textBox10 = new System.Windows.Forms.TextBox();
             this.button14 = new System.Windows.Forms.Button();
@@ -93,10 +95,10 @@
             this.label5 = new System.Windows.Forms.Label();
             this.textBox12 = new System.Windows.Forms.TextBox();
             this.dataGridView4 = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.id4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.name4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.factory4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.price4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -140,7 +142,6 @@
             this.button2.Text = "button2";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Visible = false;
-
             // 
             // textBox2
             // 
@@ -557,6 +558,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.listBox3);
             this.tabPage3.Controls.Add(this.button13);
             this.tabPage3.Controls.Add(this.textBox9);
             this.tabPage3.Controls.Add(this.button8);
@@ -570,6 +572,15 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "CSTRADE.GG";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // listBox3
+            // 
+            this.listBox3.FormattingEnabled = true;
+            this.listBox3.Location = new System.Drawing.Point(8, 31);
+            this.listBox3.Name = "listBox3";
+            this.listBox3.ScrollAlwaysVisible = true;
+            this.listBox3.Size = new System.Drawing.Size(628, 342);
+            this.listBox3.TabIndex = 32;
             // 
             // button13
             // 
@@ -676,6 +687,7 @@
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.listBox4);
             this.tabPage4.Controls.Add(this.button10);
             this.tabPage4.Controls.Add(this.textBox10);
             this.tabPage4.Controls.Add(this.button14);
@@ -689,6 +701,15 @@
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "TSF";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // listBox4
+            // 
+            this.listBox4.FormattingEnabled = true;
+            this.listBox4.Location = new System.Drawing.Point(10, 32);
+            this.listBox4.Name = "listBox4";
+            this.listBox4.ScrollAlwaysVisible = true;
+            this.listBox4.Size = new System.Drawing.Size(628, 342);
+            this.listBox4.TabIndex = 39;
             // 
             // button10
             // 
@@ -712,23 +733,23 @@
             // 
             // button14
             // 
-            this.button14.Enabled = false;
             this.button14.Location = new System.Drawing.Point(851, 341);
             this.button14.Name = "button14";
             this.button14.Size = new System.Drawing.Size(106, 32);
             this.button14.TabIndex = 37;
             this.button14.Text = "Добавить";
             this.button14.UseVisualStyleBackColor = true;
+            this.button14.Click += new System.EventHandler(this.button14_Click_2);
             // 
             // button15
             // 
-            this.button15.Enabled = false;
             this.button15.Location = new System.Drawing.Point(642, 341);
             this.button15.Name = "button15";
             this.button15.Size = new System.Drawing.Size(139, 33);
             this.button15.TabIndex = 32;
             this.button15.Text = "Старт";
             this.button15.UseVisualStyleBackColor = true;
+            this.button15.Click += new System.EventHandler(this.button15_Click);
             // 
             // label5
             // 
@@ -755,10 +776,10 @@
             this.dataGridView4.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView4.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn1,
-            this.dataGridViewTextBoxColumn2,
-            this.dataGridViewTextBoxColumn3,
-            this.dataGridViewTextBoxColumn4});
+            this.id4,
+            this.name4,
+            this.factory4,
+            this.price4});
             this.dataGridView4.Enabled = false;
             this.dataGridView4.GridColor = System.Drawing.SystemColors.Control;
             this.dataGridView4.Location = new System.Drawing.Point(642, 34);
@@ -767,28 +788,28 @@
             this.dataGridView4.Size = new System.Drawing.Size(315, 301);
             this.dataGridView4.TabIndex = 34;
             // 
-            // dataGridViewTextBoxColumn1
+            // id4
             // 
-            this.dataGridViewTextBoxColumn1.HeaderText = "id";
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.Visible = false;
+            this.id4.HeaderText = "id";
+            this.id4.Name = "id4";
+            this.id4.Visible = false;
             // 
-            // dataGridViewTextBoxColumn2
+            // name4
             // 
-            this.dataGridViewTextBoxColumn2.HeaderText = "Название";
-            this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.Width = 200;
+            this.name4.HeaderText = "Название";
+            this.name4.Name = "name4";
+            this.name4.Width = 200;
             // 
-            // dataGridViewTextBoxColumn3
+            // factory4
             // 
-            this.dataGridViewTextBoxColumn3.HeaderText = "Качество";
-            this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.Visible = false;
+            this.factory4.HeaderText = "Качество";
+            this.factory4.Name = "factory4";
+            this.factory4.Visible = false;
             // 
-            // dataGridViewTextBoxColumn4
+            // price4
             // 
-            this.dataGridViewTextBoxColumn4.HeaderText = "Цена";
-            this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
+            this.price4.HeaderText = "Цена";
+            this.price4.Name = "price4";
             // 
             // Form1
             // 
@@ -798,7 +819,6 @@
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.button2);
             this.DoubleBuffered = true;
-            this.Name = "Form1";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -886,10 +906,12 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.TextBox textBox12;
         private System.Windows.Forms.DataGridView dataGridView4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
+        private System.Windows.Forms.ListBox listBox3;
+        private System.Windows.Forms.ListBox listBox4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn id4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn name4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn factory4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn price4;
     }
 }
 

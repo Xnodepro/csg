@@ -23,6 +23,7 @@ namespace CSMONEY
         int Id = 0;
         int IdLoot = 0;
         int IdCsTrade = 0;
+        int IdTSF = 0;
         public Form1()
         {
             InitializeComponent();
@@ -52,11 +53,12 @@ namespace CSMONEY
             string json = JsonConvert.SerializeObject(Program.Data);
             File.WriteAllText("data.txt", json);
         }
+        #region Refresh
         private void RefreshGrid()
         {
             dataGridView1.Rows.Clear();
             foreach (var item in Program.Data)
-            {      
+            {
                 int rowId = dataGridView1.Rows.Add();
                 DataGridViewRow row = dataGridView1.Rows[rowId];
                 row.Cells["id2"].Value = item.Id;
@@ -64,7 +66,7 @@ namespace CSMONEY
                 row.Cells["Factor"].Value = item.Factory;
                 row.Cells["Price"].Value = item.Price;
             }
-           
+
         }
         private void RefreshGridLootFarm()
         {
@@ -77,7 +79,7 @@ namespace CSMONEY
                     DataGridViewRow row = dataGridView2.Rows[rowId];
                     row.Cells["id1"].Value = item.Id;
                     row.Cells["name1"].Value = item.Name;
-                  //  row.Cells["factor1"].Value = item.Factory;
+                    //  row.Cells["factor1"].Value = item.Factory;
                     row.Cells["price1"].Value = item.Price;
                 }
             }
@@ -95,7 +97,7 @@ namespace CSMONEY
                     DataGridViewRow row = dataGridView3.Rows[rowId];
                     row.Cells["id3"].Value = item.Id;
                     row.Cells["name3"].Value = item.Name;
-                  //  row.Cells["factory3"].Value = item.Factory;
+                    //  row.Cells["factory3"].Value = item.Factory;
                     row.Cells["price3"].Value = item.Price;
                 }
             }
@@ -111,15 +113,17 @@ namespace CSMONEY
                 {
                     int rowId = dataGridView4.Rows.Add();
                     DataGridViewRow row = dataGridView4.Rows[rowId];
-                    row.Cells["id3"].Value = item.Id;
-                    row.Cells["name3"].Value = item.Name;
+                    row.Cells["id4"].Value = item.Id;
+                    row.Cells["name4"].Value = item.Name;
                     //  row.Cells["factory3"].Value = item.Factory;
-                    row.Cells["price3"].Value = item.Price;
+                    row.Cells["price4"].Value = item.Price;
                 }
             }
             catch (Exception ex) { }
 
         }
+        #endregion
+        #region rTimer
         private void timer1_Tick(object sender, EventArgs e)
         {
             try
@@ -129,7 +133,7 @@ namespace CSMONEY
                     for (int i = 0; i < Program.Mess.Count; i++)
                     {
                         listBox1.Items.Insert(0, Program.Mess.Dequeue());
-                       // textBox1.Text = Program.Mess.Dequeue() + Environment.NewLine + textBox1.Text;
+                        // textBox1.Text = Program.Mess.Dequeue() + Environment.NewLine + textBox1.Text;
                     }
                 }
                 if (Program.MessLoot.Count != 0)
@@ -137,14 +141,21 @@ namespace CSMONEY
                     for (int i = 0; i < Program.MessLoot.Count; i++)
                     {
                         listBox2.Items.Insert(0, Program.MessLoot.Dequeue());
-                       
+
                     }
                 }
                 if (Program.MessCsTrade.Count != 0)
                 {
                     for (int i = 0; i < Program.MessCsTrade.Count; i++)
                     {
-                        textBox9.Text = Program.MessCsTrade.Dequeue() + Environment.NewLine + textBox9.Text;
+                        listBox3.Items.Insert(0, Program.MessCsTrade.Dequeue());
+                    }
+                }
+                if (Program.MessTSF.Count != 0)
+                {
+                    for (int i = 0; i < Program.MessTSF.Count; i++)
+                    {
+                        listBox4.Items.Insert(0, Program.MessTSF.Dequeue());
                     }
                 }
                 //if (Program.MessTelegram.Count != 0)
@@ -155,14 +166,94 @@ namespace CSMONEY
                 //       // textBox9.Text = Program.MessTelegram.Dequeue() + Environment.NewLine + textBox9.Text;
                 //    }
                 //}
-               
+
             }
             catch (Exception ex)
             {
                 string s = ex.Message;
             }
-            
+
         }
+        private void timer2_Tick(object sender, EventArgs e)
+        {
+            string tmp = "";
+            foreach (var item in listBox1.Items)
+            {
+                tmp = tmp + item + Environment.NewLine;
+            }
+            File.WriteAllText("./logCsMoney/" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-fff") + ".txt", tmp);
+            listBox1.Items.Clear();
+
+            tmp = "";
+            foreach (var item in listBox2.Items)
+            {
+                tmp = tmp + item + Environment.NewLine;
+            }
+            File.WriteAllText("./logLoot/" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-fff") + ".txt", tmp);
+            listBox2.Items.Clear();
+
+            tmp = "";
+            foreach (var item in listBox3.Items)
+            {
+                tmp = tmp + item + Environment.NewLine;
+            }
+            File.WriteAllText("./logCsTrade/" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-fff") + ".txt", tmp);
+            listBox3.Items.Clear();
+
+
+            tmp = "";
+            foreach (var item in listBox4.Items)
+            {
+                tmp = tmp + item + Environment.NewLine;
+            }
+            File.WriteAllText("./logTSF/" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-fff") + ".txt", tmp);
+            listBox4.Items.Clear();
+        }
+        #endregion
+        #region Enebl
+        private void enableCSMoney()
+        {
+            if (Properties.Settings.Default.csmoney != "")
+            {
+                //  var a = Properties.Settings.Default.lootfarm;
+                button1.Enabled = true;
+                button4.Enabled = true;
+                button11.Enabled = true;
+                textBox4.Enabled = true;
+            }
+        }
+        private void enableLoot()
+        {
+            if (Properties.Settings.Default.lootfarm != "")
+            {
+                //  var a = Properties.Settings.Default.lootfarm;
+                button5.Enabled = true;
+                button6.Enabled = true;
+                button12.Enabled = true;
+                textBox7.Enabled = true;
+            }
+        }
+        private void enableCsTrade()
+        {
+            if (Properties.Settings.Default.CsTrade != "")
+            {
+                //  var a = Properties.Settings.Default.lootfarm;
+                button9.Enabled = true;
+                button8.Enabled = true;
+                textBox11.Enabled = true;
+            }
+        }
+        private void enableCsTSF()
+        {
+            if (Properties.Settings.Default.CsTSF != "")
+            {
+                //  var a = Properties.Settings.Default.lootfarm;
+                button15.Enabled = true;
+                button14.Enabled = true;
+                textBox12.Enabled = true;
+            }
+        }
+        #endregion
         private void textBox4_TextChanged(object sender, EventArgs e)
         {
             Program.sleepMSecond = Convert.ToInt32(textBox4.Text);
@@ -204,70 +295,8 @@ namespace CSMONEY
             RefreshGridCsTrade();
             RefreshGridCsTSF();
         }
-        private void enableCSMoney()
-        {
-            if (Properties.Settings.Default.csmoney != "")
-            {
-              //  var a = Properties.Settings.Default.lootfarm;
-                button1.Enabled = true;
-                button4.Enabled = true;
-                button11.Enabled = true;
-                textBox4.Enabled = true;
-            }
-        }
-        private void enableLoot()
-        {
-            if (Properties.Settings.Default.lootfarm != "")
-            {
-              //  var a = Properties.Settings.Default.lootfarm;
-                button5.Enabled = true;
-                button6.Enabled = true;
-                button12.Enabled = true;
-                textBox7.Enabled = true;
-            }
-        }
-        private void enableCsTrade()
-        {
-            if (Properties.Settings.Default.CsTrade != "")
-            {
-                //  var a = Properties.Settings.Default.lootfarm;
-                button9.Enabled = true;
-                button8.Enabled = true;
-                textBox11.Enabled = true;
-            }
-        }
-        private void enableCsTSF()
-        {
-            if (Properties.Settings.Default.CsTSF != "")
-            {
-                //  var a = Properties.Settings.Default.lootfarm;
-                button15.Enabled = true;
-                button14.Enabled = true;
-                textBox12.Enabled = true;
-            }
-        }
-        private void timer2_Tick(object sender, EventArgs e)
-        {
-            string tmp = "";
-            foreach (var item in listBox1.Items)
-            {
-                tmp = tmp + item + Environment.NewLine;
-            }
-            File.WriteAllText("./logCsMoney/" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-fff")+".txt", tmp);
-            listBox1.Items.Clear();
-
-            tmp = "";
-            foreach (var item in listBox2.Items)
-            {
-                tmp = tmp + item + Environment.NewLine;
-            }
-            File.WriteAllText("./logLoot/" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-fff") + ".txt", tmp);
-            listBox2.Items.Clear();
-
-            tmp = "";
-            File.WriteAllText("./logCsTrade/" + DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss-fff") + ".txt", textBox9.Text);
-            textBox9.Text = "";
-        }
+       
+    
         private void button4_Click(object sender, EventArgs e)
         {
             Add a = new Add(dataGridView1);
@@ -457,6 +486,21 @@ namespace CSMONEY
         {
             Properties.Settings.Default.ApiKey = textBox13.Text;
             Properties.Settings.Default.Save();
+        }
+
+        private void button15_Click(object sender, EventArgs e)
+        {
+            TSF w = new TSF(textBox9, IdTSF);
+            new System.Threading.Thread(delegate () {
+                w.INI();
+            }).Start();
+            IdTSF++;
+        }
+
+        private void button14_Click_2(object sender, EventArgs e)
+        {
+            AddCsTSF a = new AddCsTSF(dataGridView4);
+            a.Show();
         }
     }
 }

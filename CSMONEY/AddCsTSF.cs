@@ -12,10 +12,10 @@ using System.Windows.Forms;
 
 namespace CSMONEY
 {
-    public partial class AddCsTrade : Form
+    public partial class AddCsTSF : Form
     {
         DataGridView DGV;
-        public AddCsTrade(DataGridView dgv)
+        public AddCsTSF(DataGridView dgv)
         {
             DGV = dgv;
             InitializeComponent();
@@ -31,34 +31,28 @@ namespace CSMONEY
                 //Factory = comboBox1.Text,
                 Price = Convert.ToDouble(textBox3.Text.Replace(".", ","))
             };
-            Program.DataCsTrade.Add(item);
+            Program.DataTSF.Add(item);
             RefreshGrid();
-            string json = JsonConvert.SerializeObject(Program.DataCsTrade);
+            string json = JsonConvert.SerializeObject(Program.DataTSF);
             File.WriteAllText("dataCsTrade.txt", json);
         }
         private void RefreshGrid()
         {
             DGV.Rows.Clear();
-            foreach (var item in Program.DataCsTrade)
+            foreach (var item in Program.DataTSF)
             {
                 int rowId = DGV.Rows.Add();
                 DataGridViewRow row = DGV.Rows[rowId];
-                row.Cells["id3"].Value = item.Id;
-                row.Cells["name3"].Value = item.Name;
-            //    row.Cells["factory3"].Value = item.Factory;
-                row.Cells["price3"].Value = item.Price;
+                row.Cells["id4"].Value = item.Id;
+                row.Cells["name4"].Value = item.Name;
+                //    row.Cells["factory3"].Value = item.Factory;
+                row.Cells["price4"].Value = item.Price;
             }
 
         }
-
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             textBox2.Text = Clipboard.GetText();
-        }
-
-        private void AddCsTrade_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }
