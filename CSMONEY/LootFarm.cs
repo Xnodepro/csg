@@ -117,28 +117,37 @@ namespace CSMONEY
                     {
                         string name1 = item1.FirstChild.Attributes["data-name"].Value.Replace(" ", "");
                         string name2 = (item2.Name ).Replace(" ", "");
-                        if (name1 == name2 && (Convert.ToInt32(item1.FirstChild.Attributes["data-p"].Value) / 100) <= item2.Price)
+                        if (name1 == name2  )
                         {
-                            IWebElement item = driver.FindElement(By.Id(item1.FirstChild.Attributes["id"].Value));
-                            item.Click();
-                            Program.MessLoot.Enqueue("БОТ[" + ID + "] " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "| Выбрал предмет:" + name1);
-                            try
+                            var price = (Convert.ToInt32(item1.FirstChild.Attributes["data-p"].Value) / 100);
+                            Program.MessLoot.Enqueue("БОТ[" + ID + "] " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "| Нашел предмет:" + name1);
+                            if (price <= item2.Price)
                             {
-                                Program.MessLoot.Enqueue("БОТ[" + ID + "] " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "| Нажал обмен:" + name1);
-                                Thread.Sleep(Program.sleepILoot);
-                                IWebElement tradeButton = driver.FindElement(By.Id("tradeButton"));
-                                tradeButton.Click();
-                                
+                                IWebElement item = driver.FindElement(By.Id(item1.FirstChild.Attributes["id"].Value));
+                                item.Click();
+                                Program.MessLoot.Enqueue("БОТ[" + ID + "] " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "| Выбрал предмет:" + name1);
+                                try
+                                {
+                                    Program.MessLoot.Enqueue("БОТ[" + ID + "] " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "| Нажал обмен:" + name1);
+                                    Thread.Sleep(Program.sleepILoot);
+                                    IWebElement tradeButton = driver.FindElement(By.Id("tradeButton"));
+                                    tradeButton.Click();
+
+                                }
+                                catch (Exception ex) { }
+                                try
+                                {
+                                    Thread.Sleep(5000);
+                                    IWebElement item3 = driver.FindElement(By.Id(item1.FirstChild.Attributes["id"].Value));
+                                    item3.Click();
+                                    Program.MessLoot.Enqueue("БОТ[" + ID + "] " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "| Убрал предмет с верхнего блока:" + name1);
+                                }
+                                catch (Exception ex) { }
                             }
-                            catch (Exception ex) { }
-                            try
-                            {
-                                Thread.Sleep(5000);
-                                IWebElement item3 = driver.FindElement(By.Id(item1.FirstChild.Attributes["id"].Value));
-                                item3.Click();
-                                Program.MessLoot.Enqueue("БОТ[" + ID + "] " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "| Убрал предмет с верхнего блока:" + name1);
+                            else {
+                                Program.SetListBadPrice(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff"), "loot.farm", name1, item2.Price.ToString(), price.ToString());
+                                Program.MessLoot.Enqueue("БОТ[" + ID + "] " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "| Цена не подошла предмет:" + name1 +"|Цена сайта: "+ price.ToString()+"|Цена базы: "+ item2.Price.ToString());
                             }
-                            catch (Exception ex) { }
                         return true;
                         }
                     }

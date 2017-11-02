@@ -12,14 +12,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WebSocketSharp;
-
+using WebSocket4Net;
 
 using System.Net;
+using WebSocketSharp.Server;
+using System.Security.Cryptography.X509Certificates;
 
 namespace CSMONEY
 {
+
     public partial class Form1 : Form
     {
+        List<string> ProxyList = new List<string>();
         int Id = 0;
         int IdLoot = 0;
         int IdCsTrade = 0;
@@ -408,6 +412,7 @@ namespace CSMONEY
             Program.DataLoot.RemoveAt(index);
             string json = JsonConvert.SerializeObject(Program.DataLoot);
             File.WriteAllText("dataLootFarm.txt", json);
+            RefreshGridLootFarm();
         }
         private void button11_Click(object sender, EventArgs e)
         {
@@ -482,28 +487,7 @@ namespace CSMONEY
             }
 
         }
-        private void asas()
-        {
-
-            var ws = new WebSocket("wss://cs.money/ws");
-            ws.SetCookie(new WebSocketSharp.Net.Cookie("name", "nobita"));
-            ws.OnMessage += (sender, e) =>
-            {
-                try
-                {
-                    Program.Mess.Enqueue(System.Text.Encoding.UTF8.GetString(e.RawData));
-                }
-                catch (Exception ex) {
-                    string ss="";
-                }
-            };
-       //     Console.WriteLine("Laputa says: " + e.Data);
-
-                ws.Connect();
-             //   ws.Send("BALUS");
-            //    Console.ReadKey(true);
-            
-        }
+      
         private void button14_Click_1(object sender, EventArgs e)
         {
 
@@ -541,7 +525,7 @@ namespace CSMONEY
 
         private void button15_Click(object sender, EventArgs e)
         {
-            TSF w = new TSF(textBox9, IdTSF);
+            TSF w = new TSF(textBox9, IdTSF,Convert.ToInt32(textBox12.Text),textBox16.Text,ProxyList);
             new System.Threading.Thread(delegate () {
                 w.INI();
             }).Start();
@@ -562,11 +546,182 @@ namespace CSMONEY
 
         private void button18_Click(object sender, EventArgs e)
         {
-            Deals w = new Deals(textBox9, IdDeals);
+            Deals w = new Deals(textBox9, IdDeals,Convert.ToInt32(textBox15.Text),textBox17.Text,ProxyList);
             new System.Threading.Thread(delegate () {
                 w.INI();
             }).Start();
             IdDeals++;
         }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox1.Checked == true)
+            {
+                checkBox1.Text = "Отключить";
+                Program.autoConfirm = true;
+                textBox13.Enabled = true;
+            }
+            else {
+                checkBox1.Text = "Включить";
+                Program.autoConfirm = false;
+                textBox13.Enabled = false;
+            }
+        }
+
+        private void button19_Click(object sender, EventArgs e)
+        {
+            ViewBadPrice VBP = new ViewBadPrice();
+            VBP.Show();
+        }
+
+        private void изменитьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int index = dataGridView1.CurrentCell.RowIndex;
+            Program.Dat neww  = Program.Data[index];
+            neww.Price = Convert.ToDouble(dataGridView1.Rows[index].Cells[3].Value.ToString());
+            dataGridView1.Rows.RemoveAt(index);
+            Program.Data.RemoveAt(index);
+            Program.Data.Add(neww);
+            string json = JsonConvert.SerializeObject(Program.Data);
+            File.WriteAllText("data.txt", json);
+            RefreshGrid();
+            MessageBox.Show("Успешно изменено!");
+        }
+
+        private void textBox12_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void изменитьToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            int index = dataGridView2.CurrentCell.RowIndex;
+            Program.Dat neww = Program.DataLoot[index];
+            neww.Price = Convert.ToDouble(dataGridView2.Rows[index].Cells[3].Value.ToString());
+            dataGridView2.Rows.RemoveAt(index);
+            Program.DataLoot.RemoveAt(index);
+            Program.DataLoot.Add(neww);
+            string json = JsonConvert.SerializeObject(Program.DataLoot);
+            File.WriteAllText("dataLootFarm.txt", json);
+            RefreshGridLootFarm();
+            MessageBox.Show("Успешно изменено!");
+        }
+
+        private void toolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            int index = dataGridView3.CurrentCell.RowIndex;
+            dataGridView3.Rows.RemoveAt(index);
+            Program.DataCsTrade.RemoveAt(index);
+            string json = JsonConvert.SerializeObject(Program.DataCsTrade);
+            File.WriteAllText("dataCsTrade.txt", json);
+            RefreshGridCsTrade();
+        }
+
+        private void toolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            int index = dataGridView3.CurrentCell.RowIndex;
+            Program.Dat neww = Program.DataCsTrade[index];
+            neww.Price = Convert.ToDouble(dataGridView3.Rows[index].Cells[3].Value.ToString());
+            dataGridView3.Rows.RemoveAt(index);
+            Program.DataCsTrade.RemoveAt(index);
+            Program.DataCsTrade.Add(neww);
+            string json = JsonConvert.SerializeObject(Program.DataCsTrade);
+            File.WriteAllText("dataCsTrade.txt", json);
+            RefreshGridCsTrade();
+            MessageBox.Show("Успешно изменено!");
+        }
+
+        private void toolStripMenuItem4_Click(object sender, EventArgs e)
+        {
+            int index = dataGridView4.CurrentCell.RowIndex;
+            dataGridView4.Rows.RemoveAt(index);
+            Program.DataTSF.RemoveAt(index);
+            string json = JsonConvert.SerializeObject(Program.DataTSF);
+            File.WriteAllText("dataCsTSF.txt", json);
+            RefreshGridCsTSF();
+        }
+
+        private void toolStripMenuItem5_Click(object sender, EventArgs e)
+        {
+            int index = dataGridView4.CurrentCell.RowIndex;
+            Program.Dat neww = Program.DataTSF[index];
+            neww.Price = Convert.ToDouble(dataGridView4.Rows[index].Cells[3].Value.ToString());
+            dataGridView4.Rows.RemoveAt(index);
+            Program.DataTSF.RemoveAt(index);
+            Program.DataTSF.Add(neww);
+            string json = JsonConvert.SerializeObject(Program.DataTSF);
+            File.WriteAllText("dataCsTSF.txt", json);
+            RefreshGridCsTSF();
+            MessageBox.Show("Успешно изменено!");
+        }
+
+        private void toolStripMenuItem6_Click(object sender, EventArgs e)
+        {
+            int index = dataGridView5.CurrentCell.RowIndex;
+            dataGridView5.Rows.RemoveAt(index);
+            Program.DataDeals.RemoveAt(index);
+            string json = JsonConvert.SerializeObject(Program.DataDeals);
+            File.WriteAllText("dataCsDeals.txt", json);
+            RefreshGridDeals();
+        }
+
+        private void toolStripMenuItem7_Click(object sender, EventArgs e)
+        {
+            int index = dataGridView5.CurrentCell.RowIndex;
+            Program.Dat neww = Program.DataDeals[index];
+            neww.Price = Convert.ToDouble(dataGridView5.Rows[index].Cells[3].Value.ToString());
+            dataGridView5.Rows.RemoveAt(index);
+            Program.DataDeals.RemoveAt(index);
+            Program.DataDeals.Add(neww);
+            string json = JsonConvert.SerializeObject(Program.DataDeals);
+            File.WriteAllText("dataCsDeals.txt", json);
+            RefreshGridDeals();
+            MessageBox.Show("Успешно изменено!");
+        }
+
+        private void button20_Click(object sender, EventArgs e)
+        {
+            ProxyList.Clear();
+            if (openFileDialog1.ShowDialog() == DialogResult.Cancel)
+                return;
+            // получаем выбранный файл
+            string filename = openFileDialog1.FileName;
+            // читаем файл в строку
+            string[] proxy = System.IO.File.ReadAllLines(filename);
+            foreach (var item in proxy)
+            {
+                ProxyList.Add(item);
+            }
+            MessageBox.Show("подгрузил прокси в количестве:" + ProxyList.Count);
+        }
+
+        private void button21_Click(object sender, EventArgs e)
+        {
+            ProxyList.Clear();
+            if (openFileDialog1.ShowDialog() == DialogResult.Cancel)
+                return;
+            // получаем выбранный файл
+            string filename = openFileDialog1.FileName;
+            // читаем файл в строку
+            string[] proxy = System.IO.File.ReadAllLines(filename);
+            foreach (var item in proxy)
+            {
+                ProxyList.Add(item);
+            }
+            MessageBox.Show("подгрузил прокси в количестве:" + ProxyList.Count);
+        }
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox2.Checked)
+            {
+                Program.BrowesrQuery = true;
+            }
+            else { Program.BrowesrQuery = false; }
+        }
+
+
+
     }
+
 }

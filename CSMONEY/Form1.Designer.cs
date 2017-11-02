@@ -41,6 +41,7 @@
             this.Price = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.удалитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.изменитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.button3 = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
@@ -50,6 +51,9 @@
             this.button4 = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.checkBox2 = new System.Windows.Forms.CheckBox();
+            this.button19 = new System.Windows.Forms.Button();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.label4 = new System.Windows.Forms.Label();
             this.textBox13 = new System.Windows.Forms.TextBox();
             this.button11 = new System.Windows.Forms.Button();
@@ -72,6 +76,7 @@
             this.price1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.contextMenuStrip2 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.изменитьToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.comboBox2 = new System.Windows.Forms.ComboBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.listBox3 = new System.Windows.Forms.ListBox();
@@ -86,7 +91,12 @@
             this.name3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.factory3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.price3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.contextMenuStrip3 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.button20 = new System.Windows.Forms.Button();
+            this.textBox16 = new System.Windows.Forms.TextBox();
             this.listBox4 = new System.Windows.Forms.ListBox();
             this.button10 = new System.Windows.Forms.Button();
             this.textBox10 = new System.Windows.Forms.TextBox();
@@ -99,7 +109,13 @@
             this.name4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.factory4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.price4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.contextMenuStrip4 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPage5 = new System.Windows.Forms.TabPage();
+            this.button21 = new System.Windows.Forms.Button();
+            this.textBox17 = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.listBox5 = new System.Windows.Forms.ListBox();
             this.button16 = new System.Windows.Forms.Button();
             this.textBox14 = new System.Windows.Forms.TextBox();
@@ -112,6 +128,10 @@
             this.name5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.factory5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.price5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.contextMenuStrip5 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.contextMenuStrip1.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -121,10 +141,13 @@
             this.contextMenuStrip2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).BeginInit();
+            this.contextMenuStrip3.SuspendLayout();
             this.tabPage4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
+            this.contextMenuStrip4.SuspendLayout();
             this.tabPage5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).BeginInit();
+            this.contextMenuStrip5.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -224,16 +247,24 @@
             // contextMenuStrip1
             // 
             this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.удалитьToolStripMenuItem});
+            this.удалитьToolStripMenuItem,
+            this.изменитьToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(119, 26);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(129, 48);
             // 
             // удалитьToolStripMenuItem
             // 
             this.удалитьToolStripMenuItem.Name = "удалитьToolStripMenuItem";
-            this.удалитьToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
+            this.удалитьToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
             this.удалитьToolStripMenuItem.Text = "Удалить";
             this.удалитьToolStripMenuItem.Click += new System.EventHandler(this.удалитьToolStripMenuItem_Click);
+            // 
+            // изменитьToolStripMenuItem
+            // 
+            this.изменитьToolStripMenuItem.Name = "изменитьToolStripMenuItem";
+            this.изменитьToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
+            this.изменитьToolStripMenuItem.Text = "Изменить";
+            this.изменитьToolStripMenuItem.Click += new System.EventHandler(this.изменитьToolStripMenuItem_Click);
             // 
             // comboBox1
             // 
@@ -275,6 +306,7 @@
             this.textBox4.Size = new System.Drawing.Size(69, 20);
             this.textBox4.TabIndex = 8;
             this.textBox4.Text = "500";
+            this.textBox4.Visible = false;
             this.textBox4.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
             // 
             // label1
@@ -285,6 +317,7 @@
             this.label1.Size = new System.Drawing.Size(58, 13);
             this.label1.TabIndex = 9;
             this.label1.Text = "Задержка";
+            this.label1.Visible = false;
             // 
             // timer2
             // 
@@ -318,6 +351,9 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.checkBox2);
+            this.tabPage1.Controls.Add(this.button19);
+            this.tabPage1.Controls.Add(this.checkBox1);
             this.tabPage1.Controls.Add(this.label4);
             this.tabPage1.Controls.Add(this.textBox13);
             this.tabPage1.Controls.Add(this.button11);
@@ -340,6 +376,41 @@
             this.tabPage1.Text = "CSMONEY";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // checkBox2
+            // 
+            this.checkBox2.AutoSize = true;
+            this.checkBox2.BackColor = System.Drawing.Color.MistyRose;
+            this.checkBox2.Location = new System.Drawing.Point(702, 7);
+            this.checkBox2.Name = "checkBox2";
+            this.checkBox2.Size = new System.Drawing.Size(139, 17);
+            this.checkBox2.TabIndex = 17;
+            this.checkBox2.Text = "Запрос через браузер";
+            this.checkBox2.UseVisualStyleBackColor = false;
+            this.checkBox2.CheckedChanged += new System.EventHandler(this.checkBox2_CheckedChanged);
+            // 
+            // button19
+            // 
+            this.button19.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.button19.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.button19.Location = new System.Drawing.Point(847, 4);
+            this.button19.Name = "button19";
+            this.button19.Size = new System.Drawing.Size(106, 23);
+            this.button19.TabIndex = 16;
+            this.button19.Text = "Список BadPrice";
+            this.button19.UseVisualStyleBackColor = false;
+            this.button19.Click += new System.EventHandler(this.button19_Click);
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(349, 8);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(75, 17);
+            this.checkBox1.TabIndex = 15;
+            this.checkBox1.Text = "Включить";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            this.checkBox1.CheckedChanged += new System.EventHandler(this.checkBox1_CheckedChanged);
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -351,6 +422,7 @@
             // 
             // textBox13
             // 
+            this.textBox13.Enabled = false;
             this.textBox13.Location = new System.Drawing.Point(62, 6);
             this.textBox13.Name = "textBox13";
             this.textBox13.Size = new System.Drawing.Size(280, 20);
@@ -523,38 +595,50 @@
             // 
             this.id1.HeaderText = "id";
             this.id1.Name = "id1";
+            this.id1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.id1.Visible = false;
             // 
             // name1
             // 
             this.name1.HeaderText = "Название";
             this.name1.Name = "name1";
+            this.name1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.name1.Width = 200;
             // 
             // factor1
             // 
             this.factor1.HeaderText = "Качество";
             this.factor1.Name = "factor1";
+            this.factor1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.factor1.Visible = false;
             // 
             // price1
             // 
             this.price1.HeaderText = "Цена";
             this.price1.Name = "price1";
+            this.price1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // contextMenuStrip2
             // 
             this.contextMenuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem1});
+            this.toolStripMenuItem1,
+            this.изменитьToolStripMenuItem1});
             this.contextMenuStrip2.Name = "contextMenuStrip1";
-            this.contextMenuStrip2.Size = new System.Drawing.Size(119, 26);
+            this.contextMenuStrip2.Size = new System.Drawing.Size(129, 48);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(118, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(128, 22);
             this.toolStripMenuItem1.Text = "Удалить";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
+            // 
+            // изменитьToolStripMenuItem1
+            // 
+            this.изменитьToolStripMenuItem1.Name = "изменитьToolStripMenuItem1";
+            this.изменитьToolStripMenuItem1.Size = new System.Drawing.Size(128, 22);
+            this.изменитьToolStripMenuItem1.Text = "Изменить";
+            this.изменитьToolStripMenuItem1.Click += new System.EventHandler(this.изменитьToolStripMenuItem1_Click);
             // 
             // comboBox2
             // 
@@ -670,7 +754,7 @@
             this.name3,
             this.factory3,
             this.price3});
-            this.dataGridView3.Enabled = false;
+            this.dataGridView3.ContextMenuStrip = this.contextMenuStrip3;
             this.dataGridView3.GridColor = System.Drawing.SystemColors.Control;
             this.dataGridView3.Location = new System.Drawing.Point(642, 34);
             this.dataGridView3.Name = "dataGridView3";
@@ -682,27 +766,55 @@
             // 
             this.id3.HeaderText = "id";
             this.id3.Name = "id3";
+            this.id3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.id3.Visible = false;
             // 
             // name3
             // 
             this.name3.HeaderText = "Название";
             this.name3.Name = "name3";
+            this.name3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.name3.Width = 200;
             // 
             // factory3
             // 
             this.factory3.HeaderText = "Качество";
             this.factory3.Name = "factory3";
+            this.factory3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.factory3.Visible = false;
             // 
             // price3
             // 
             this.price3.HeaderText = "Цена";
             this.price3.Name = "price3";
+            this.price3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // contextMenuStrip3
+            // 
+            this.contextMenuStrip3.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem2,
+            this.toolStripMenuItem3});
+            this.contextMenuStrip3.Name = "contextMenuStrip1";
+            this.contextMenuStrip3.Size = new System.Drawing.Size(129, 48);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(128, 22);
+            this.toolStripMenuItem2.Text = "Удалить";
+            this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
+            // 
+            // toolStripMenuItem3
+            // 
+            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(128, 22);
+            this.toolStripMenuItem3.Text = "Изменить";
+            this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.button20);
+            this.tabPage4.Controls.Add(this.textBox16);
             this.tabPage4.Controls.Add(this.listBox4);
             this.tabPage4.Controls.Add(this.button10);
             this.tabPage4.Controls.Add(this.textBox10);
@@ -717,6 +829,25 @@
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "TSF";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // button20
+            // 
+            this.button20.Location = new System.Drawing.Point(657, 6);
+            this.button20.Name = "button20";
+            this.button20.Size = new System.Drawing.Size(139, 23);
+            this.button20.TabIndex = 41;
+            this.button20.Text = "Подгрузить Прокси";
+            this.button20.UseVisualStyleBackColor = true;
+            this.button20.Click += new System.EventHandler(this.button20_Click);
+            // 
+            // textBox16
+            // 
+            this.textBox16.Location = new System.Drawing.Point(526, 6);
+            this.textBox16.Name = "textBox16";
+            this.textBox16.Size = new System.Drawing.Size(112, 20);
+            this.textBox16.TabIndex = 40;
+            this.textBox16.Text = "83.149.70.159:13042";
+            this.textBox16.Visible = false;
             // 
             // listBox4
             // 
@@ -749,6 +880,7 @@
             // 
             // button14
             // 
+            this.button14.Enabled = false;
             this.button14.Location = new System.Drawing.Point(851, 341);
             this.button14.Name = "button14";
             this.button14.Size = new System.Drawing.Size(106, 32);
@@ -759,6 +891,7 @@
             // 
             // button15
             // 
+            this.button15.Enabled = false;
             this.button15.Location = new System.Drawing.Point(642, 341);
             this.button15.Name = "button15";
             this.button15.Size = new System.Drawing.Size(139, 33);
@@ -771,20 +904,22 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Enabled = false;
-            this.label5.Location = new System.Drawing.Point(824, 11);
+            this.label5.Location = new System.Drawing.Point(802, 10);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(58, 13);
+            this.label5.Size = new System.Drawing.Size(110, 13);
             this.label5.TabIndex = 36;
-            this.label5.Text = "Задержка";
+            this.label5.Text = "Количество потоков";
             // 
             // textBox12
             // 
             this.textBox12.Enabled = false;
-            this.textBox12.Location = new System.Drawing.Point(888, 7);
+            this.textBox12.Location = new System.Drawing.Point(918, 7);
             this.textBox12.Name = "textBox12";
-            this.textBox12.Size = new System.Drawing.Size(69, 20);
+            this.textBox12.Size = new System.Drawing.Size(39, 20);
             this.textBox12.TabIndex = 35;
-            this.textBox12.Text = "500";
+            this.textBox12.Text = "10";
+            this.textBox12.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBox12.TextChanged += new System.EventHandler(this.textBox12_TextChanged);
             // 
             // dataGridView4
             // 
@@ -796,7 +931,7 @@
             this.name4,
             this.factory4,
             this.price4});
-            this.dataGridView4.Enabled = false;
+            this.dataGridView4.ContextMenuStrip = this.contextMenuStrip4;
             this.dataGridView4.GridColor = System.Drawing.SystemColors.Control;
             this.dataGridView4.Location = new System.Drawing.Point(642, 34);
             this.dataGridView4.Name = "dataGridView4";
@@ -808,27 +943,56 @@
             // 
             this.id4.HeaderText = "id";
             this.id4.Name = "id4";
+            this.id4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.id4.Visible = false;
             // 
             // name4
             // 
             this.name4.HeaderText = "Название";
             this.name4.Name = "name4";
+            this.name4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.name4.Width = 200;
             // 
             // factory4
             // 
             this.factory4.HeaderText = "Качество";
             this.factory4.Name = "factory4";
+            this.factory4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.factory4.Visible = false;
             // 
             // price4
             // 
             this.price4.HeaderText = "Цена";
             this.price4.Name = "price4";
+            this.price4.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // contextMenuStrip4
+            // 
+            this.contextMenuStrip4.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem4,
+            this.toolStripMenuItem5});
+            this.contextMenuStrip4.Name = "contextMenuStrip1";
+            this.contextMenuStrip4.Size = new System.Drawing.Size(129, 48);
+            // 
+            // toolStripMenuItem4
+            // 
+            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(128, 22);
+            this.toolStripMenuItem4.Text = "Удалить";
+            this.toolStripMenuItem4.Click += new System.EventHandler(this.toolStripMenuItem4_Click);
+            // 
+            // toolStripMenuItem5
+            // 
+            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(128, 22);
+            this.toolStripMenuItem5.Text = "Изменить";
+            this.toolStripMenuItem5.Click += new System.EventHandler(this.toolStripMenuItem5_Click);
             // 
             // tabPage5
             // 
+            this.tabPage5.Controls.Add(this.button21);
+            this.tabPage5.Controls.Add(this.textBox17);
+            this.tabPage5.Controls.Add(this.label7);
             this.tabPage5.Controls.Add(this.listBox5);
             this.tabPage5.Controls.Add(this.button16);
             this.tabPage5.Controls.Add(this.textBox14);
@@ -843,6 +1007,35 @@
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "DEALS";
             this.tabPage5.UseVisualStyleBackColor = true;
+            // 
+            // button21
+            // 
+            this.button21.Location = new System.Drawing.Point(642, 5);
+            this.button21.Name = "button21";
+            this.button21.Size = new System.Drawing.Size(139, 23);
+            this.button21.TabIndex = 50;
+            this.button21.Text = "Подгрузить Прокси";
+            this.button21.UseVisualStyleBackColor = true;
+            this.button21.Click += new System.EventHandler(this.button21_Click);
+            // 
+            // textBox17
+            // 
+            this.textBox17.Location = new System.Drawing.Point(524, 7);
+            this.textBox17.Name = "textBox17";
+            this.textBox17.Size = new System.Drawing.Size(112, 20);
+            this.textBox17.TabIndex = 49;
+            this.textBox17.Text = "83.149.70.159:13042";
+            this.textBox17.Visible = false;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Enabled = false;
+            this.label7.Location = new System.Drawing.Point(802, 11);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(110, 13);
+            this.label7.TabIndex = 48;
+            this.label7.Text = "Количество потоков";
             // 
             // listBox5
             // 
@@ -875,6 +1068,7 @@
             // 
             // button17
             // 
+            this.button17.Enabled = false;
             this.button17.Location = new System.Drawing.Point(851, 341);
             this.button17.Name = "button17";
             this.button17.Size = new System.Drawing.Size(106, 32);
@@ -885,6 +1079,7 @@
             // 
             // button18
             // 
+            this.button18.Enabled = false;
             this.button18.Location = new System.Drawing.Point(642, 341);
             this.button18.Name = "button18";
             this.button18.Size = new System.Drawing.Size(139, 33);
@@ -902,15 +1097,17 @@
             this.label6.Size = new System.Drawing.Size(58, 13);
             this.label6.TabIndex = 44;
             this.label6.Text = "Задержка";
+            this.label6.Visible = false;
             // 
             // textBox15
             // 
             this.textBox15.Enabled = false;
-            this.textBox15.Location = new System.Drawing.Point(888, 7);
+            this.textBox15.Location = new System.Drawing.Point(918, 7);
             this.textBox15.Name = "textBox15";
-            this.textBox15.Size = new System.Drawing.Size(69, 20);
+            this.textBox15.Size = new System.Drawing.Size(39, 20);
             this.textBox15.TabIndex = 43;
-            this.textBox15.Text = "500";
+            this.textBox15.Text = "10";
+            this.textBox15.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // dataGridView5
             // 
@@ -922,7 +1119,7 @@
             this.name5,
             this.factory5,
             this.price5});
-            this.dataGridView5.Enabled = false;
+            this.dataGridView5.ContextMenuStrip = this.contextMenuStrip5;
             this.dataGridView5.GridColor = System.Drawing.SystemColors.Control;
             this.dataGridView5.Location = new System.Drawing.Point(642, 34);
             this.dataGridView5.Name = "dataGridView5";
@@ -934,24 +1131,54 @@
             // 
             this.id5.HeaderText = "id";
             this.id5.Name = "id5";
+            this.id5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.id5.Visible = false;
             // 
             // name5
             // 
             this.name5.HeaderText = "Название";
             this.name5.Name = "name5";
+            this.name5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.name5.Width = 200;
             // 
             // factory5
             // 
             this.factory5.HeaderText = "Качество";
             this.factory5.Name = "factory5";
+            this.factory5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.factory5.Visible = false;
             // 
             // price5
             // 
             this.price5.HeaderText = "Цена";
             this.price5.Name = "price5";
+            this.price5.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // contextMenuStrip5
+            // 
+            this.contextMenuStrip5.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem6,
+            this.toolStripMenuItem7});
+            this.contextMenuStrip5.Name = "contextMenuStrip1";
+            this.contextMenuStrip5.Size = new System.Drawing.Size(129, 48);
+            // 
+            // toolStripMenuItem6
+            // 
+            this.toolStripMenuItem6.Name = "toolStripMenuItem6";
+            this.toolStripMenuItem6.Size = new System.Drawing.Size(128, 22);
+            this.toolStripMenuItem6.Text = "Удалить";
+            this.toolStripMenuItem6.Click += new System.EventHandler(this.toolStripMenuItem6_Click);
+            // 
+            // toolStripMenuItem7
+            // 
+            this.toolStripMenuItem7.Name = "toolStripMenuItem7";
+            this.toolStripMenuItem7.Size = new System.Drawing.Size(128, 22);
+            this.toolStripMenuItem7.Text = "Изменить";
+            this.toolStripMenuItem7.Click += new System.EventHandler(this.toolStripMenuItem7_Click);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
             // 
             // Form1
             // 
@@ -961,6 +1188,7 @@
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.button2);
             this.DoubleBuffered = true;
+            this.Name = "Form1";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
@@ -975,12 +1203,15 @@
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView3)).EndInit();
+            this.contextMenuStrip3.ResumeLayout(false);
             this.tabPage4.ResumeLayout(false);
             this.tabPage4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
+            this.contextMenuStrip4.ResumeLayout(false);
             this.tabPage5.ResumeLayout(false);
             this.tabPage5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView5)).EndInit();
+            this.contextMenuStrip5.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1023,14 +1254,6 @@
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem удалитьToolStripMenuItem;
-        private System.Windows.Forms.DataGridViewTextBoxColumn id1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn name1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn factor1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn price1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn id3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn name3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn factory3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn price3;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip2;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.Button button11;
@@ -1053,10 +1276,6 @@
         private System.Windows.Forms.DataGridView dataGridView4;
         private System.Windows.Forms.ListBox listBox3;
         private System.Windows.Forms.ListBox listBox4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn id4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn name4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn factory4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn price4;
         private System.Windows.Forms.TabPage tabPage5;
         private System.Windows.Forms.ListBox listBox5;
         private System.Windows.Forms.Button button16;
@@ -1066,10 +1285,42 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox textBox15;
         private System.Windows.Forms.DataGridView dataGridView5;
+        private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Button button19;
+        private System.Windows.Forms.ToolStripMenuItem изменитьToolStripMenuItem;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ToolStripMenuItem изменитьToolStripMenuItem1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn id1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn name1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn factor1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn price1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn id3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn name3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn factory3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn price3;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip3;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn id4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn name4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn factory4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn price4;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip4;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem5;
         private System.Windows.Forms.DataGridViewTextBoxColumn id5;
         private System.Windows.Forms.DataGridViewTextBoxColumn name5;
         private System.Windows.Forms.DataGridViewTextBoxColumn factory5;
         private System.Windows.Forms.DataGridViewTextBoxColumn price5;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip5;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem6;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem7;
+        private System.Windows.Forms.TextBox textBox16;
+        private System.Windows.Forms.TextBox textBox17;
+        private System.Windows.Forms.Button button20;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.Button button21;
+        private System.Windows.Forms.CheckBox checkBox2;
     }
 }
 

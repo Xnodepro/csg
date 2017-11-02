@@ -20,8 +20,12 @@ namespace CSMONEY
         IWebDriver driver;
         int ID = 0;
         dynamic ITEMS;
+        int CountThread = 10;
         List<System.Net.Cookie> cook;
         List<System.Net.Cookie> cookAll;
+        private List<string> ProxyFix = new List<string>();
+        private Queue<string> ProxyList = new Queue<string>();
+        string IP="";
         public struct Data
         {
 
@@ -36,9 +40,16 @@ namespace CSMONEY
 
             public string a { get; set; }
         }
-        public Deals(TextBox Log, int id)
+        public Deals(TextBox Log, int id, int _CountThread,string ip, List<string> proxy)
         {
             ID = id;
+            CountThread = _CountThread;
+            IP = ip;
+            ProxyFix = proxy;
+            foreach (var item in ProxyFix)
+            {
+                ProxyList.Enqueue(item);
+            }
         }
         public void INI()
         {
@@ -69,12 +80,12 @@ namespace CSMONEY
             {
                 handler.CookieContainer.Add(new System.Net.Cookie(item.Name, item.Value) { Domain = item.Domain });
             }
-            for (int i = 0; i < 1; i++)
+            for (int i = 0; i < CountThread; i++)
             {
                 new System.Threading.Thread(delegate () {
                     Get(handler, i);
                 }).Start();
-                //Thread.Sleep(500);
+                Thread.Sleep(1000);
             }
             start();
         }
@@ -84,7 +95,14 @@ namespace CSMONEY
             var firstFull = Convert.ToInt32(DateTime.Now.ToString("HHmmss"));
             while (true)
             {
-                Program.MessDeals.Enqueue("БОТ[" + ID + "] " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "|проверил предметы!" );
+                if (ProxyList.Count < 3)
+                {
+                    foreach (var item in ProxyFix)
+                    {
+                        ProxyList.Enqueue(item);
+                    }
+                }
+               // Program.MessDeals.Enqueue("БОТ[" + ID + "] " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "|проверил предметы!" );
                 while (Program.pauseDeals == true)
                 {
                     Thread.Sleep(200);
@@ -125,25 +143,63 @@ namespace CSMONEY
                 Thread.Sleep(Program.sleepMDeals);
             }
         }
+        public HttpClient Prox(HttpClient client1, HttpClientHandler handler, string paroxyu)
+        {
+
+            HttpClient client = client1;
+            try
+            {
+                string
+                httpUserName = "webminidead",
+                httpPassword = "159357Qq";
+                string proxyUri = paroxyu;
+                NetworkCredential proxyCreds = new NetworkCredential(
+                    httpUserName,
+                    httpPassword
+                );
+                WebProxy proxy = new WebProxy(proxyUri, false)
+                {
+                    UseDefaultCredentials = false,
+                    Credentials = proxyCreds,
+                };
+                try
+                {
+                    handler.Proxy = null;
+                    handler.Proxy = proxy;
+                    handler.PreAuthenticate = true;
+                    handler.UseDefaultCredentials = false;
+                    handler.Credentials = new NetworkCredential(httpUserName, httpPassword);
+                    handler.AllowAutoRedirect = true;
+                }
+                catch (Exception ex) { }
+                client = new HttpClient(handler);
+            }
+            catch (Exception ex) { }
+            return client;
+        }
         private void Get(HttpClientHandler handler, int id)
         {
             HttpClientHandler handler1 = handler;
-            HttpClient client = null;
 
-            client = new HttpClient(handler1);
-            client.Timeout = TimeSpan.FromSeconds(60);
-            client.DefaultRequestHeaders.Add("User-Agent",
- "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36");
-            client.DefaultRequestHeaders.Add("Accept", "application/json, text/javascript, */*; q=0.01");
-            client.DefaultRequestHeaders.Add("Accept-Language", "ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4");
-            client.DefaultRequestHeaders.Add("Origin", "https://ru.cs.deals");
-            client.DefaultRequestHeaders.Add("Referer", "https://ru.cs.deals/");
-            client.DefaultRequestHeaders.Add("X-Requested-With", "XMLHttpRequest");
-            //       client.DefaultRequestHeaders.Add("Connection", "keep-alive");
+
             while (true)
             {
                 try
                 {
+                    string newProxy = ProxyList.Dequeue();
+                    HttpClient client = null;
+                    HttpClientHandler handler2 = new HttpClientHandler();
+                    handler2.CookieContainer = handler1.CookieContainer;
+                    handler2.Proxy = null;
+                    client = Prox(client, handler2, newProxy);// new HttpClient(handler1);
+                    client.Timeout = TimeSpan.FromSeconds(60);
+                    client.DefaultRequestHeaders.Add("User-Agent",
+         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36");
+                    client.DefaultRequestHeaders.Add("Accept", "application/json, text/javascript, */*; q=0.01");
+                    client.DefaultRequestHeaders.Add("Accept-Language", "ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4");
+                    client.DefaultRequestHeaders.Add("Origin", "https://ru.cs.deals");
+                    client.DefaultRequestHeaders.Add("Referer", "https://ru.cs.deals/");
+                    client.DefaultRequestHeaders.Add("X-Requested-With", "XMLHttpRequest");
                     var stringContent = new StringContent("", Encoding.UTF8, "application/json");
                     //    stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue() "application/json";
                     var response = client.PostAsync("https://ru.cs.deals/ajax/botsinventory", stringContent).Result;
@@ -156,11 +212,11 @@ namespace CSMONEY
                         Program.MessDeals.Enqueue("БОТ[" + id + "] " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "|" + "Завершил загрузку предметов:" + ITEMS.response.Count);
                     }
 
-                    Random random = new Random();
 
+                    Thread.Sleep(2600);
                     //  Thread.Sleep(random.Next(50, 700));
                 }
-                catch (Exception ex) { }
+                catch (Exception ex) { Program.MessDeals.Enqueue("БОТ[" + id + "] " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "|" + ex.Message); }
             }
             // return new Data();
         }
@@ -168,7 +224,7 @@ namespace CSMONEY
         {
             try
             {
-                if (Items.response != null)
+                if (Items != null)
                 {
                     foreach (var item in Items.response)
                     {
@@ -178,7 +234,7 @@ namespace CSMONEY
                             {
                                 if (item.m.Value is String)
                                 {
-                                    if (item.m.Value.Replace(" ", "") == (name.Name).Replace(" ", ""))
+                                    if (item.m.Value.ToString().Replace(" ", "") == (name.Name).Replace(" ", ""))
                                     {
                                         Program.MessDeals.Enqueue("БОТ[" + ID + "] " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "| Нашел предмет :" + item.m.Value + "|Цена_Сайта:" + item.v.Value + "|Цена_Наша:" + name.Price);
                                         if (item.v.Value <= name.Price)
@@ -191,10 +247,14 @@ namespace CSMONEY
                                             //string trade = (string)js.ExecuteScript("document.getElementById(\"main-trade-button\").click();");
                                             //Program.MessCsTrade.Enqueue("БОТ[" + ID + "] " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "| Нажал ОБМЕН");
                                             //     Thread.Sleep(5000);
+                                            Thread.Sleep(1000);
                                             driver.Navigate().Refresh();
                                             Program.MessDeals.Enqueue("БОТ[" + ID + "] " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "| Обновил страницу.");
                                             return true;//main-trade-button
                                         }
+                                        else {
+                                            Program.SetListBadPrice(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff"), "DEALS", item.m.Value, name.Price.ToString(), item.v.Value.ToString());
+                                            Program.MessDeals.Enqueue("БОТ[" + ID + "] " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "| Предмет не подошел :" + item.m.Value + "|Цена_Сайта:" + item.v.Value + "|Цена_Наша:" + name.Price); }
                                     }
                                 }
                             }

@@ -26,11 +26,13 @@ namespace CSMONEY
         public static List<Dat> DataTSF = new List<Dat>();
         public static List<Dat> DataDeals = new List<Dat>();
         public static Queue<string> Mess = new Queue<string>();
+        public static List<DataViewBadPrice> BadPrice = new List<DataViewBadPrice>();
         public static Queue<string> MessTelegram = new Queue<string>();
         public static Queue<string> MessLoot = new Queue<string>();
         public static Queue<string> MessCsTrade = new Queue<string>();
         public static Queue<string> MessTSF = new Queue<string>();
         public static Queue<string> MessDeals = new Queue<string>();
+        public static bool BrowesrQuery = false;
         public static bool pauseMoney = false;
         public static bool pauseLoot = false;
         public static bool pauseCsTrade = false;
@@ -47,12 +49,33 @@ namespace CSMONEY
         public static int sleepICsTrade = 0;
         public static int sleepITSF = 0;
         public static int sleepIDeals = 0;
+        public static bool autoConfirm = false;
         public struct Dat
         {
             public int Id { get; set; }
             public string Name { get; set; }
             public string Factory { get; set; }
             public double Price { get; set; }
+        }
+        public struct DataViewBadPrice
+        {
+            public string Date { get; set; }
+            public string Site { get; set; }
+            public string Name { get; set; }
+            public string OldPrice { get; set; }
+            public string NewPrice { get; set; }
+        }
+        public static  void SetListBadPrice(string _Data, string _Site, string _Name, string _OldPrice, string _NewPrice)
+        {
+            Program.DataViewBadPrice item = new Program.DataViewBadPrice()
+            {
+                Date = _Data,
+                Site = _Site,
+                Name = _Name,
+                OldPrice = _OldPrice,
+                NewPrice = _NewPrice
+            };
+            Program.BadPrice.Add(item);
         }
 
     }

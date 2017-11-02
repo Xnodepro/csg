@@ -34,7 +34,7 @@ namespace CSMONEY
             Program.DataTSF.Add(item);
             RefreshGrid();
             string json = JsonConvert.SerializeObject(Program.DataTSF);
-            File.WriteAllText("dataCsTrade.txt", json);
+            File.WriteAllText("dataCsTSF.txt", json);
         }
         private void RefreshGrid()
         {

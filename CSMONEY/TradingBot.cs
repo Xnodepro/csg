@@ -52,11 +52,12 @@ namespace CSMONEY
             {
                 handler.CookieContainer.Add(cookie);
             }
-            for (int i = 0; i < 30; i++)
+            Program.Mess.Enqueue(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "|Начал запускать запросники!");
+            for (int i = 0; i < 20; i++)
             {
                 new System.Threading.Thread(delegate () { GetOffer(); }).Start();
             }
-            
+            Program.Mess.Enqueue(DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "|ЗВАЕРШИЛ запускать запросники!");
         }
         private void GetOffer()
         {
@@ -68,7 +69,7 @@ namespace CSMONEY
             while (true)
             {
                 Random rand = new Random();
-           //     Thread.Sleep(rand.Next(0, 500));
+                Thread.Sleep(rand.Next(200, 500));
                 if (Convert.ToInt32(DateTime.Now.ToString("HHmmss")) - firstFull > 100|| Check==true)
                 {
                     break;
@@ -98,9 +99,10 @@ namespace CSMONEY
                             Content = content;
                             Offerid = tradeofferid;
                             Check = true;
-                            
+
                         }
                     }
+                  //  else { Program.Mess.Enqueue("" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss:fff") + "|" + unixTimestamp.ToString() + "|Проверяю новые трейды2!"); }
                //     new System.Threading.Thread(delegate () { AcceptOffer(content, tradeofferid); }).Start();
 
 
